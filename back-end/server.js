@@ -14,6 +14,8 @@ app.use(express.json());
 app.use("/api/ngo", require("./routes/ngoRoutes"));
 app.use("/api/volunteer", require("./routes/volunteerRoutes"));
 
+app.use("/api/user", require("./routes/userRoutes"));
+
 app.use("/api/opportunities", require("./routes/opportunityRoutes"));
 
 app.listen(process.env.PORT, () =>
