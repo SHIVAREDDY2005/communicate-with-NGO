@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { createOpportunity, getOpportunities } = require("../controllers/opportunityController");
-const { protect } = require("../middleware/authMiddleware");
 
-router.post("/", protect, createOpportunity);
-router.get("/", getOpportunities);
+const controller = require("../controllers/opportunityController");
+const { protect } = require("../middleware/authMiddleware"); // ✅ FIXED
+
+router.post("/", protect, controller.createOpportunity);
+router.get("/",controller.getAllOpportunities);
+router.get("/my", protect, controller.getMyOpportunities);
+router.put("/:id", protect, controller.updateOpportunity);
+router.delete("/:id", protect, controller.deleteOpportunity);
 
 module.exports = router;
