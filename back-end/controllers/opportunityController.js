@@ -226,24 +226,58 @@ exports.getAllOpportunities = async (req, res) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;
 
-    const query = {
-      applyDeadline: { $gte: new Date() },
-    };
+    const {
+      search,
+      location,
+      ngo,
+      skill,
+      minStipend,
+      maxStipend
+    } = req.query;
 
-    // 🔍 Search Fix
-    if (req.query.search) {
-      const regex = new RegExp(req.query.search, "i");
+    const query = {};
+
+    // ✅ Only show active opportunities
+    query.applyDeadline = { $gte: new Date() };
+
+    // 🔍 Search (title + description + skills)
+    if (search) {
+      const regex = new RegExp(search, "i");
 
       query.$or = [
-        { title: regex }
-        // { skills: { $elemMatch: { $regex: regex } } },
+        { title: regex },
+        { description: regex },
+        { skills: { $elemMatch: { $regex: regex } } }
       ];
+    }
+
+    // 📍 Location filter
+    if (location) {
+      query.location = location;
+    }
+
+    // 🏢 NGO filter
+    if (ngo) {
+      query.ngo = ngo;
+    }
+
+    // 🛠 Skill filter (exact skill match)
+    if (skill) {
+      query.skills = { $in: [skill] };
+    }
+
+    // 💰 Stipend range filter
+    if (minStipend || maxStipend) {
+      query.stipend = {};
+      if (minStipend) query.stipend.$gte = Number(minStipend);
+      if (maxStipend) query.stipend.$lte = Number(maxStipend);
     }
 
     console.log("FINAL QUERY:", query);
 
     const opportunities = await Opportunity.find(query)
       .populate("ngo", "name email")
+      .sort({ createdAt: -1 }) // newest first
       .skip((page - 1) * limit)
       .limit(limit);
 
@@ -255,6 +289,7 @@ exports.getAllOpportunities = async (req, res) => {
       pages: Math.ceil(total / limit),
       opportunities,
     });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
