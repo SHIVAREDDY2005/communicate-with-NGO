@@ -9,5 +9,6 @@ router.get("/",controller.getAllOpportunities);
 router.get("/my", protect, controller.getMyOpportunities);
 router.put("/:id", protect, controller.updateOpportunity);
 router.delete("/:id", protect, controller.deleteOpportunity);
-
+router.get("/dashboard/stats", protect, controller.getDashboardStats);
+router.get("/", controller.getAllOpportunities);
 module.exports = router;

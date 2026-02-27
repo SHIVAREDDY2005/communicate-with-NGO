@@ -14,7 +14,17 @@ exports.createOpportunity = async (req, res) => {
       applyDeadline,
     } = req.body;
 
-    // Date validations
+    // ===== Basic Validation =====
+    if (!title || !description || !startDate || !endDate || !applyDeadline) {
+      return res.status(400).json({
+        message: "Please provide all required fields",
+      });
+    }
+
+    // ===== Normalize Title =====
+    const normalizedTitle = title.trim().toLowerCase();
+
+    // ===== Date Validation =====
     if (new Date(startDate) > new Date(endDate)) {
       return res.status(400).json({
         message: "Start date must be before end date",
@@ -27,9 +37,9 @@ exports.createOpportunity = async (req, res) => {
       });
     }
 
-    // ✅ Manual duplicate check BEFORE insert
+    // ===== Duplicate Check =====
     const existing = await Opportunity.findOne({
-      title: title.toLowerCase(),
+      title: normalizedTitle,
       ngo: req.user.id,
     });
 
@@ -39,8 +49,9 @@ exports.createOpportunity = async (req, res) => {
       });
     }
 
+    // ===== Create =====
     const opportunity = await Opportunity.create({
-      title,
+      title: normalizedTitle,
       description,
       skills,
       duration,
@@ -49,11 +60,11 @@ exports.createOpportunity = async (req, res) => {
       endDate,
       applyDeadline,
       ngo: req.user.id,
+      status: "Open",
     });
 
     res.status(201).json(opportunity);
   } catch (error) {
-    // ✅ Database duplicate safety
     if (error.code === 11000) {
       return res.status(400).json({
         message: "Duplicate opportunity title for this NGO.",
@@ -69,19 +80,23 @@ exports.updateOpportunity = async (req, res) => {
   try {
     const opportunity = await Opportunity.findById(req.params.id);
 
-    if (!opportunity)
+    if (!opportunity) {
       return res.status(404).json({ message: "Opportunity not found" });
+    }
 
-    // Only owner NGO can edit
-    if (opportunity.ngo.toString() !== req.user.id)
+    // ===== Authorization =====
+    if (opportunity.ngo.toString() !== req.user.id) {
       return res.status(403).json({ message: "Not authorized" });
+    }
 
-    // If title is being updated → check duplicate
+    // ===== Normalize Title if updating =====
     if (req.body.title) {
+      const normalizedTitle = req.body.title.trim().toLowerCase();
+
       const existing = await Opportunity.findOne({
-        title: req.body.title.toLowerCase(),
+        title: normalizedTitle,
         ngo: req.user.id,
-        _id: { $ne: req.params.id }, // exclude current document
+        _id: { $ne: req.params.id },
       });
 
       if (existing) {
@@ -89,8 +104,29 @@ exports.updateOpportunity = async (req, res) => {
           message: "Another opportunity with this title already exists.",
         });
       }
+
+      req.body.title = normalizedTitle;
     }
 
+    // ===== Date Validation =====
+    const newStartDate = req.body.startDate || opportunity.startDate;
+    const newEndDate = req.body.endDate || opportunity.endDate;
+    const newApplyDeadline =
+      req.body.applyDeadline || opportunity.applyDeadline;
+
+    if (new Date(newStartDate) > new Date(newEndDate)) {
+      return res.status(400).json({
+        message: "Start date must be before end date",
+      });
+    }
+
+    if (new Date(newApplyDeadline) > new Date(newStartDate)) {
+      return res.status(400).json({
+        message: "Apply deadline must be before start date",
+      });
+    }
+
+    // ===== Update =====
     const updated = await Opportunity.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -114,11 +150,13 @@ exports.deleteOpportunity = async (req, res) => {
   try {
     const opportunity = await Opportunity.findById(req.params.id);
 
-    if (!opportunity)
+    if (!opportunity) {
       return res.status(404).json({ message: "Opportunity not found" });
+    }
 
-    if (opportunity.ngo.toString() !== req.user.id)
+    if (opportunity.ngo.toString() !== req.user.id) {
       return res.status(403).json({ message: "Not authorized" });
+    }
 
     await opportunity.deleteOne();
 
@@ -131,8 +169,10 @@ exports.deleteOpportunity = async (req, res) => {
 // ================= GET ALL =================
 exports.getAllOpportunities = async (req, res) => {
   try {
-    const opportunities = await Opportunity.find({ status: "Open" })
-      .populate("ngo", "name email");
+    const opportunities = await Opportunity.find({
+      status: "Open",
+      applyDeadline: { $gte: new Date() }, // Hide expired
+    }).populate("ngo", "name email");
 
     res.json(opportunities);
   } catch (error) {
@@ -143,8 +183,78 @@ exports.getAllOpportunities = async (req, res) => {
 // ================= GET MY =================
 exports.getMyOpportunities = async (req, res) => {
   try {
-    const opportunities = await Opportunity.find({ ngo: req.user.id });
+    const opportunities = await Opportunity.find({
+      ngo: req.user.id,
+    });
+
     res.json(opportunities);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// ================= NGO DASHBOARD =================
+exports.getDashboardStats = async (req, res) => {
+  try {
+    const ngoId = req.user.id;
+
+    const total = await Opportunity.countDocuments({ ngo: ngoId });
+
+    const open = await Opportunity.countDocuments({
+      ngo: ngoId,
+      status: "Open",
+    });
+
+    const closed = await Opportunity.countDocuments({
+      ngo: ngoId,
+      status: "Closed",
+    });
+
+    res.json({
+      totalOpportunities: total,
+      openOpportunities: open,
+      closedOpportunities: closed,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// ================= GET ALL (ADVANCED SEARCH + FILTER) =================
+exports.getAllOpportunities = async (req, res) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
+
+    const query = {
+      applyDeadline: { $gte: new Date() },
+    };
+
+    // 🔍 Search Fix
+    if (req.query.search) {
+      const regex = new RegExp(req.query.search, "i");
+
+      query.$or = [
+        { title: regex }
+        // { skills: { $elemMatch: { $regex: regex } } },
+      ];
+    }
+
+    console.log("FINAL QUERY:", query);
+
+    const opportunities = await Opportunity.find(query)
+      .populate("ngo", "name email")
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const total = await Opportunity.countDocuments(query);
+
+    res.json({
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+      opportunities,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

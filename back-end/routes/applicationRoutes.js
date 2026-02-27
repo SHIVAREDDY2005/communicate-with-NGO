@@ -9,5 +9,5 @@ router.get("/my", protect, controller.myApplications);
 router.get("/opportunity/:opportunityId", protect, controller.getApplicants);
 router.put("/:id", protect, controller.updateStatus);
 router.delete("/undo/:opportunityId", protect, controller.undoApplication);
-    
+
 module.exports = router;

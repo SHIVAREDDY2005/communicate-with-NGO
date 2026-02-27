@@ -105,11 +105,13 @@ exports.updateStatus = async (req, res) => {
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
-
+    if (req.user.role !== "ngo") {
+      return res.status(403).json({ message: "Only NGOs can update status" });
+    }
     // 🔥 Safe comparison
     if (
-      application.opportunity.ngo.toString() !==
-      req.user._id.toString()
+      !application.opportunity ||
+      application.opportunity.ngo.toString() !== req.user._id.toString()
     ) {
       return res.status(403).json({ message: "Not authorized" });
     }
@@ -125,9 +127,9 @@ exports.updateStatus = async (req, res) => {
 // ================= UNDO APPLICATION =================
 exports.undoApplication = async (req, res) => {
   try {
-    const { opportunityId } = req.params;   // ✅ FIXED
+    const { opportunityId } = req.params;
 
-    const application = await Application.findOneAndDelete({
+    const application = await Application.findOne({
       opportunity: opportunityId,
       volunteer: req.user._id,
     });
@@ -137,6 +139,14 @@ exports.undoApplication = async (req, res) => {
         message: "Application not found",
       });
     }
+
+    if (application.status === "accepted") {
+      return res.status(400).json({
+        message: "Cannot withdraw after being accepted",
+      });
+    }
+
+    await application.deleteOne();
 
     res.status(200).json({
       message: "Application withdrawn successfully",
