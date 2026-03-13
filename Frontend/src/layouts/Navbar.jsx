@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import NotificationModal from "../components/NotificationModal";
 
 // Add SkillBridge logo component
 const SkillBridgeLogo = ({ size = 24, className }) => (
@@ -39,6 +41,62 @@ const Navbar = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
+  const [showNotifications, setShowNotifications] = useState(false);
+
+const notifications =
+  user.role === "ngo"
+    ? [
+        {
+          id: 1,
+          text: "New volunteer applied to your opportunity",
+          time: "2 minutes ago",
+          read: false
+        },
+        {
+          id: 2,
+          text: "Rahul Kumar sent you a message",
+          time: "10 minutes ago",
+          read: false
+        },
+        {
+          id: 3,
+          text: "Naveen Bajjuri accepted your opportunity invitation",
+          time: "1 hour ago",
+          read: true
+        },
+        {
+          id: 4,
+          text: "3 volunteers viewed your opportunity today",
+          time: "Today",
+          read: true
+        }
+      ]
+    : [
+        {
+          id: 1,
+          text: "HopeForAll NGO sent you a message",
+          time: "2 minutes ago",
+          read: false
+        },
+        {
+          id: 2,
+          text: "Your application was accepted by Green Earth NGO",
+          time: "15 minutes ago",
+          read: false
+        },
+        {
+          id: 3,
+          text: "New opportunity matches your skills",
+          time: "1 hour ago",
+          read: true
+        },
+        {
+          id: 4,
+          text: "Reminder: Volunteer event tomorrow",
+          time: "Today",
+          read: true
+        }
+      ];
 
   return (
     <div className="navbar" style={{
@@ -54,6 +112,8 @@ const Navbar = () => {
       top: 0,
       zIndex: 1000
     }}>
+
+      {/* Logo */}
       <div 
         className="logo" 
         onClick={() => navigate("/")}
@@ -93,6 +153,7 @@ const Navbar = () => {
         }}>
           <SkillBridgeLogo size={24} />
         </div>
+
         <span style={{
           background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
           WebkitBackgroundClip: 'text',
@@ -103,12 +164,14 @@ const Navbar = () => {
         </span>
       </div>
 
+      {/* Right side */}
       <div className="nav-right" style={{
         display: 'flex',
         alignItems: 'center',
         gap: '20px'
       }}>
-        {/* Show role with enhanced badge */}
+
+        {/* Role Badge */}
         <span className="role-badge" style={{
           padding: '6px 16px',
           background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
@@ -137,7 +200,42 @@ const Navbar = () => {
           {user.role === "ngo" ? "NGO Account" : "Volunteer Account"}
         </span>
 
-        {/* User avatar (if name exists) */}
+        {/* 🔔 Notification Bell */}
+        <div
+  onClick={() => setShowNotifications(true)}
+  style={{
+    position: "relative",
+    cursor: "pointer",
+    padding: "8px",
+    borderRadius: "10px",
+    transition: "all 0.2s ease"
+  }}
+  onMouseEnter={(e)=>{
+    e.currentTarget.style.background="#f3f4f6";
+  }}
+  onMouseLeave={(e)=>{
+    e.currentTarget.style.background="transparent";
+  }}
+>
+
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4b5563" strokeWidth="2.2">
+    <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7"/>
+    <path d="M13.73 21a2 2 0 01-3.46 0"/>
+  </svg>
+
+  <span style={{
+    position:"absolute",
+    top:"2px",
+    right:"2px",
+    width:"8px",
+    height:"8px",
+    borderRadius:"50%",
+    background:"#ef4444"
+  }}></span>
+
+</div>
+
+        {/* Avatar */}
         {user.name && (
           <div style={{
             width: '38px',
@@ -166,6 +264,7 @@ const Navbar = () => {
           </div>
         )}
 
+        {/* Logout */}
         <button 
           className="secondary-btn" 
           onClick={handleLogout}
@@ -204,7 +303,13 @@ const Navbar = () => {
           </svg>
           Logout
         </button>
+
       </div>
+      <NotificationModal
+  isOpen={showNotifications}
+  onClose={() => setShowNotifications(false)}
+  notifications={notifications}
+/>
     </div>
   );
 };

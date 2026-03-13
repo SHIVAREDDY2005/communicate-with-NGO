@@ -10,7 +10,8 @@ import CreateOpportunity from "./pages/ngo/CreateOpportunity";
 import MyOpportunities from "./pages/ngo/MyOpportunities";
 import Applicants from "./pages/ngo/Applicants";
 import NGOProfile from "./pages/ngo/NGOProfile";
-import EditOpportunity from "./pages/ngo/EditOpportunity"; // ✅ added
+import EditOpportunity from "./pages/ngo/EditOpportunity";
+import NGOMessages from "./pages/ngo/Messages";
 
 /* VOLUNTEER */
 import VolunteerDashboard from "./pages/volunteer/VolunteerDashboard";
@@ -18,6 +19,7 @@ import Opportunities from "./pages/volunteer/Opportunities";
 import OpportunityDetails from "./pages/volunteer/OpportunityDetails";
 import MyApplications from "./pages/volunteer/MyApplications";
 import VolunteerProfile from "./pages/volunteer/VolunteerProfile";
+import Messages from "./pages/volunteer/Messages";
 
 /* COMMON */
 import ProtectedRoute from "./components/common/ProtectedRoute";
@@ -108,6 +110,14 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route
+  path="/ngo-messages"
+  element={
+    <ProtectedRoute>
+      <NGOMessages />
+    </ProtectedRoute>
+  }
+/>
 
       <Route
         path="/opportunities"
@@ -144,6 +154,16 @@ function App() {
           </ProtectedRoute>
         }
       />
+     <Route
+  path="/messages"
+  element={
+    <ProtectedRoute>
+      <Messages />
+    </ProtectedRoute>
+  }
+/>
+  
+      
 
     </Routes>
   );

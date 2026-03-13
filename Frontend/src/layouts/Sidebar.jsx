@@ -230,35 +230,37 @@ const Sidebar = () => {
         </button>
 
         {/* ⭐ MESSAGES */}
-        <button
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            width: '100%',
-            border: 'none',
-            borderRadius: '10px',
-            background: 'transparent',
-            color: '#4b5563',
-            fontSize: '14px',
-            fontWeight: '500',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            textAlign: 'left'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#f3f4f6';
-            e.currentTarget.style.color = '#2563eb';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.color = '#4b5563';
-          }}
-        >
-          <MessageCircle size={18} />
-          Messages
-        </button>
+       {/* ⭐ MESSAGES */}
+<button
+  onClick={() => navigate("/messages")}
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    padding: '12px 16px',
+    width: '100%',
+    border: 'none',
+    borderRadius: '10px',
+    background: 'transparent',
+    color: '#4b5563',
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    textAlign: 'left'
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.backgroundColor = '#f3f4f6';
+    e.currentTarget.style.color = '#2563eb';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.backgroundColor = 'transparent';
+    e.currentTarget.style.color = '#4b5563';
+  }}
+>
+  <MessageCircle size={18} />
+  Messages
+</button>
 
         {/* ⭐ SETTINGS */}
         <button
