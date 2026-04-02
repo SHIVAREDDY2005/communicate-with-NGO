@@ -2,3 +2,6 @@
 venv/
 back-end/server.err.log
 back-end/server.out.log
+node_modules/
+Frontend/node_modules/
+back-end/node_modules/

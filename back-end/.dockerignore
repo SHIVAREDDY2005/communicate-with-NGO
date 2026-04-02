@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+.env
+server.err.log
+server.out.log
+required.txt
+venv
