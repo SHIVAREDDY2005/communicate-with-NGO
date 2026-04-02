@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 
@@ -69,7 +69,7 @@ export default function EditProfileVolunteer() {
 
         {/* Header with gradient */}
         <div style={{
-          background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+          background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
           padding: '32px 32px 24px',
           textAlign: 'center',
           position: 'relative',
@@ -165,10 +165,10 @@ export default function EditProfileVolunteer() {
                   backgroundColor: '#fafafa'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#2563eb';
-                  e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                  e.target.style.borderColor = '#111111';
+                  e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                   e.target.style.backgroundColor = 'white';
-                  e.target.previousSibling.style.color = '#2563eb';
+                  e.target.previousSibling.style.color = '#111111';
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = '#e5e7eb';
@@ -223,10 +223,10 @@ export default function EditProfileVolunteer() {
                   backgroundColor: '#fafafa'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#2563eb';
-                  e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                  e.target.style.borderColor = '#111111';
+                  e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                   e.target.style.backgroundColor = 'white';
-                  e.target.previousSibling.style.color = '#2563eb';
+                  e.target.previousSibling.style.color = '#111111';
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = '#e5e7eb';
@@ -260,17 +260,17 @@ export default function EditProfileVolunteer() {
                   {form.skills.map((skill, index) => (
                     <span key={index} style={{
                       padding: '6px 14px',
-                      background: '#eff6ff',
+                      background: '#f2f2f2',
                       borderRadius: '30px',
                       fontSize: '12px',
                       fontWeight: '500',
-                      color: '#2563eb',
-                      border: '1px solid #dbeafe',
+                      color: '#111111',
+                      border: '1px solid #e6e6e6',
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '6px'
                     }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#2563eb">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#111111">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                       </svg>
                       {skill}
@@ -290,7 +290,7 @@ export default function EditProfileVolunteer() {
             style={{
               width: '100%',
               padding: '16px',
-              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+              background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
               border: 'none',
               borderRadius: '14px',
               color: 'white',
@@ -305,12 +305,12 @@ export default function EditProfileVolunteer() {
               marginBottom: '16px'
             }}
             onMouseEnter={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)';
+              e.target.style.background = 'linear-gradient(135deg, #2b2b2b 0%, #1f1f1f 100%)';
               e.target.style.transform = 'scale(1.02)';
-              e.target.style.boxShadow = '0 10px 20px -5px rgba(37, 99, 235, 0.5)';
+              e.target.style.boxShadow = '0 10px 20px -5px rgba(0,0,0,0.28)';
             }}
             onMouseLeave={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)';
+              e.target.style.background = 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)';
               e.target.style.transform = 'scale(1)';
               e.target.style.boxShadow = 'none';
             }}
@@ -370,8 +370,8 @@ export default function EditProfileVolunteer() {
             }}
             onMouseEnter={(e) => {
               e.target.style.background = '#f3f4f6';
-              e.target.style.borderColor = '#2563eb';
-              e.target.style.color = '#2563eb';
+              e.target.style.borderColor = '#111111';
+              e.target.style.color = '#111111';
             }}
             onMouseLeave={(e) => {
               e.target.style.background = 'transparent';

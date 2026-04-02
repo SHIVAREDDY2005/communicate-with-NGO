@@ -1,20 +1,15 @@
 const express = require("express");
-const router = express.Router();
 
-const {
-  createOpportunity,
-  getOpportunities,
-  getMyOpportunities,
-  updateOpportunity,
-  deleteOpportunity
-} = require("../controllers/opportunityController");
-
+const controller = require("../controllers/opportunityController");
 const { protect } = require("../middleware/authMiddleware");
 
-router.post("/", protect, createOpportunity);
-router.get("/", getOpportunities);
-router.get("/my", protect, getMyOpportunities);
-router.put("/:id", protect, updateOpportunity);
-router.delete("/:id", protect, deleteOpportunity);
+const router = express.Router();
+
+router.post("/", protect, controller.createOpportunity);
+router.get("/", controller.getAllOpportunities);
+router.get("/my", protect, controller.getMyOpportunities);
+router.get("/dashboard/stats", protect, controller.getDashboardStats);
+router.put("/:id", protect, controller.updateOpportunity);
+router.delete("/:id", protect, controller.deleteOpportunity);
 
 module.exports = router;

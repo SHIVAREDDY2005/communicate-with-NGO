@@ -1,4 +1,4 @@
-// NGO Dashboard (e.g., Dashboard.jsx or NgoDashboard.jsx)
+﻿// NGO Dashboard (e.g., Dashboard.jsx or NgoDashboard.jsx)
 import Navbar from "../../layouts/Navbar";
 import NGOSidebar from "../../layouts/NGOSidebar";
 import { PlusCircle, Mail, Briefcase, Users, FileText, Clock } from "lucide-react";
@@ -44,34 +44,36 @@ const Dashboard = () => {
   const [recentApplications, setRecentApplications] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const ngoRes = await api.get("/user/me");
-        setNgo(ngoRes.data);
-        
-        const oppRes = await api.get("/opportunity/my");
-        const opportunities = oppRes.data || [];
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // const ngoRes = await api.get("/user/me");
+      const ngoRes = await api.get("/user/ngo/organization");
 
-        const appsRes = await api.get("/application/ngo");
-        const apps = appsRes.data || [];
+      setNgo(ngoRes.data);
 
-        setRecentApplications(apps.slice(0, 5));
+      const oppRes = await api.get("/opportunity/my");
+      const opportunities = oppRes.data || [];
 
-        setStats({
-          activeOpportunities: opportunities.filter(o => o.status === "open").length,
-          totalApplications: apps.length,
-          activeVolunteers: apps.filter(a => a.status === "accepted").length,
-          pendingApplications: apps.filter(a => a.status === "pending").length
-        });
+      const appsRes = await api.get("/application/ngo");
+      const apps = appsRes.data || [];
 
-      } catch (err) {
-        console.log("Error fetching dashboard data:", err);
-      }
-    };
+      setRecentApplications(apps.slice(0, 5));
 
-    fetchData();
-  }, []);
+      setStats({
+        activeOpportunities: opportunities.filter(o => o.status === "open").length,
+        totalApplications: apps.length,
+        activeVolunteers: apps.filter(a => a.status === "accepted").length,
+        pendingApplications: apps.filter(a => a.status === "pending").length
+      });
+
+    } catch (err) {
+      console.log("Error fetching dashboard data:", err);
+    }
+  };
+
+  fetchData();
+}, []);
 
   const getStatusColor = (status) => {
     switch(status?.toLowerCase()) {
@@ -97,7 +99,7 @@ const Dashboard = () => {
       
       {/* Main Content - with left margin for fixed sidebar */}
       <div style={{ 
-        marginLeft: '260px', // Same as sidebar width
+        marginLeft: 'var(--sidebar-width)', // Same as sidebar width
         paddingTop: '70px', // Height of navbar
         minHeight: '100vh'
       }}>
@@ -106,14 +108,14 @@ const Dashboard = () => {
         }}>
           {/* Welcome Banner */}
           <div style={{
-            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+            background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
             borderRadius: '24px',
             padding: '28px 32px',
             marginBottom: '24px',
             color: 'white',
             position: 'relative',
             overflow: 'hidden',
-            boxShadow: '0 20px 40px -15px rgba(37, 99, 235, 0.4)'
+            boxShadow: '0 20px 40px -15px rgba(0,0,0,0.22)'
           }}>
             <div style={{
               position: 'absolute',
@@ -158,7 +160,7 @@ const Dashboard = () => {
                   margin: '0 0 6px',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.1)'
                 }}>
-                  Welcome back, {ngo?.name || "Organization"}! 🎉
+                  Welcome back, {ngo?.name || "Organization"}!
                 </h2>
                 <p style={{ 
                   fontSize: '15px', 
@@ -198,14 +200,14 @@ const Dashboard = () => {
               width: '100px',
               height: '100px',
               borderRadius: '30px',
-              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+              background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
               fontSize: '42px',
               fontWeight: '700',
-              boxShadow: '0 15px 30px -10px rgba(37, 99, 235, 0.4)'
+              boxShadow: '0 15px 30px -10px rgba(0,0,0,0.22)'
             }}>
               {ngo?.name?.charAt(0) || 'N'}
             </div>
@@ -216,7 +218,7 @@ const Dashboard = () => {
                 fontWeight: '700', 
                 color: '#1f2937', 
                 margin: '0 0 8px',
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
               }}>
@@ -230,14 +232,14 @@ const Dashboard = () => {
                 marginBottom: '16px'
               }}>
                 <p style={{ fontSize: '14px', color: '#6b7280', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#111111">
                     <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <span style={{ fontWeight: '500' }}>{ngo?.email || "rowdy123@gmail.com"}</span>
                 </p>
                 
                 <p style={{ fontSize: '14px', color: '#6b7280', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#111111">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
                   </svg>
                   <span style={{ fontWeight: '500' }}>{ngo?.location || "kodad"}</span>
@@ -279,7 +281,7 @@ const Dashboard = () => {
               alignItems: 'center', 
               gap: '10px'
             }}>
-              <Briefcase size={22} color="#2563eb" />
+              <Briefcase size={22} color="#111111" />
               Overview
             </h3>
 
@@ -297,9 +299,9 @@ const Dashboard = () => {
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#2563eb';
+                e.currentTarget.style.borderColor = '#111111';
                 e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(37, 99, 235, 0.3)';
+                e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(0,0,0,0.18)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = '#e5e7eb';
@@ -311,11 +313,11 @@ const Dashboard = () => {
                     width: '48px',
                     height: '48px',
                     borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
+                    background: 'linear-gradient(135deg, #e6e6e6 0%, #d1d1d1 100%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#2563eb'
+                    color: '#111111'
                   }}>
                     <Briefcase size="24" />
                   </div>
@@ -340,9 +342,9 @@ const Dashboard = () => {
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#2563eb';
+                e.currentTarget.style.borderColor = '#111111';
                 e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(37, 99, 235, 0.3)';
+                e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(0,0,0,0.18)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = '#e5e7eb';
@@ -354,11 +356,11 @@ const Dashboard = () => {
                     width: '48px',
                     height: '48px',
                     borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
+                    background: 'linear-gradient(135deg, #e6e6e6 0%, #d1d1d1 100%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#2563eb'
+                    color: '#111111'
                   }}>
                     <FileText size="24" />
                   </div>
@@ -480,7 +482,7 @@ const Dashboard = () => {
               alignItems: 'center', 
               gap: '10px'
             }}>
-              <FileText size={22} color="#2563eb" />
+              <FileText size={22} color="#111111" />
               Recent Applications
             </h3>
             
@@ -519,9 +521,9 @@ const Dashboard = () => {
                         transition: 'all 0.2s ease'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = '#2563eb';
+                        e.currentTarget.style.borderColor = '#111111';
                         e.currentTarget.style.transform = 'translateX(4px)';
-                        e.currentTarget.style.boxShadow = '0 8px 16px -8px rgba(37, 99, 235, 0.2)';
+                        e.currentTarget.style.boxShadow = '0 8px 16px -8px rgba(0,0,0,0.12)';
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.borderColor = '#e5e7eb';
@@ -534,7 +536,7 @@ const Dashboard = () => {
                           width: '40px',
                           height: '40px',
                           borderRadius: '12px',
-                          background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                          background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -611,7 +613,7 @@ const Dashboard = () => {
               alignItems: 'center', 
               gap: '10px'
             }}>
-              <PlusCircle size={22} color="#2563eb" />
+              <PlusCircle size={22} color="#111111" />
               Quick Actions
             </h3>
 
@@ -624,7 +626,7 @@ const Dashboard = () => {
                 onClick={() => navigate("/create-opportunity")}
                 style={{
                   padding: '16px 24px',
-                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                   border: 'none',
                   borderRadius: '30px',
                   color: 'white',
@@ -636,15 +638,15 @@ const Dashboard = () => {
                   justifyContent: 'center',
                   gap: '10px',
                   transition: 'all 0.2s ease',
-                  boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)'
+                  boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)'
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.transform = 'scale(1.02)';
-                  e.target.style.boxShadow = '0 12px 24px -8px rgba(37, 99, 235, 0.5)';
+                  e.target.style.boxShadow = '0 12px 24px -8px rgba(0,0,0,0.28)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.transform = 'scale(1)';
-                  e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                  e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                 }}
               >
                 <PlusCircle size={18} />
@@ -670,8 +672,8 @@ const Dashboard = () => {
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.background = '#f3f4f6';
-                  e.target.style.borderColor = '#2563eb';
-                  e.target.style.color = '#2563eb';
+                  e.target.style.borderColor = '#111111';
+                  e.target.style.color = '#111111';
                   e.target.style.transform = 'scale(1.02)';
                 }}
                 onMouseLeave={(e) => {
@@ -693,3 +695,5 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+

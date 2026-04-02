@@ -1,28 +1,20 @@
 const express = require("express");
-const router = express.Router();
+
 const { protect } = require("../middleware/authMiddleware");
-const User = require("../models/User");
+const {
+  getMe,
+  getNgoOrganization,
+  updateProfile,
+  getNgoMembers,
+  addNgoMember,
+} = require("../controllers/userController");
 
-/* GET CURRENT USER */
-router.get("/me", protect, (req, res) => {
-  res.json(req.user);
-});
+const router = express.Router();
 
-/* UPDATE PROFILE (WORKS FOR BOTH ROLES) */
-router.put("/profile", protect, async (req, res) => {
-  try {
-    const updates = req.body;
-
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
-      updates,
-      { new: true }
-    ).select("-password");
-
-    res.json(updatedUser);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get("/me", protect, getMe);
+router.get("/ngo/organization", protect, getNgoOrganization);
+router.get("/ngo/members", protect, getNgoMembers);
+router.post("/ngo/add-member", protect, addNgoMember);
+router.put("/profile", protect, updateProfile);
 
 module.exports = router;

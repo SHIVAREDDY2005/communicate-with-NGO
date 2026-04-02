@@ -9,6 +9,18 @@ const userSchema = new mongoose.Schema({
     enum: ["volunteer", "ngo"],
     required: true
   },
+  ngoRole: {
+    type: String,
+    enum: ["admin", "member"],
+    default: function defaultNgoRole() {
+      return this.role === "ngo" ? "admin" : undefined;
+    }
+  },
+  parentNgo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: null
+  },
   location: String,
   skills: [String],
   organizationName: String,

@@ -1,7 +1,9 @@
 const Application = require("../models/Application");
 const Opportunity = require("../models/Opportunity");
+const Conversation = require("../models/Conversation");
+const Message = require("../models/Message");
 
-/* ================= APPLY ================= */
+// ================= APPLY =================
 exports.apply = async (req, res) => {
   try {
     const { opportunity, message } = req.body;
@@ -12,12 +14,13 @@ exports.apply = async (req, res) => {
       return res.status(404).json({ message: "Opportunity not found" });
     }
 
-    // ✅ FIXED (lowercase check)
-    if (opp.status !== "open") {
+    // Check if opportunity is closed manually
+    if (String(opp.status).toLowerCase() !== "open") {
       return res.status(400).json({ message: "Opportunity is closed" });
     }
 
-    if (opp.applyDeadline && new Date() > new Date(opp.applyDeadline)) {
+    // ✅ ADD THIS: Deadline validation
+    if (new Date() > new Date(opp.applyDeadline)) {
       return res.status(400).json({
         message: "Application deadline has passed",
       });
@@ -38,18 +41,46 @@ exports.apply = async (req, res) => {
       opportunity,
       volunteer: req.user._id,
       message,
-      status: "pending" // ✅ ensure default
     });
+
+    // Ensure NGO <-> Volunteer conversation exists when someone applies
+    // so both users can immediately see each other in the message section.
+    let conversation = await Conversation.findOne({
+      participants: { $all: [req.user._id, opp.ngo] },
+    });
+
+    if (!conversation) {
+      conversation = await Conversation.create({
+        participants: [req.user._id, opp.ngo],
+      });
+    }
+
+    // Seed chat with the application message as first thread message.
+    if (message && String(message).trim()) {
+      const firstMessage = await Message.create({
+        conversationId: conversation._id,
+        sender: req.user._id,
+        text: String(message).trim(),
+      });
+
+      conversation.lastMessage = firstMessage._id;
+      await conversation.save();
+    }
 
     res.status(201).json(application);
 
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: "Already applied",
+      });
+    }
+
     res.status(500).json({ message: error.message });
   }
 };
 
-
-/* ================= VOLUNTEER VIEW ================= */
+// ================= VOLUNTEER VIEW =================
 exports.myApplications = async (req, res) => {
   try {
     const applications = await Application.find({
@@ -64,18 +95,14 @@ exports.myApplications = async (req, res) => {
   }
 };
 
-
-/* ================= NGO VIEW APPLICANTS ================= */
+// ================= NGO VIEW APPLICANTS =================
 exports.getApplicants = async (req, res) => {
   try {
-    if (req.user.role !== "ngo") {
-      return res.status(403).json({ message: "Access denied" });
-    }
-
     const applications = await Application.find({
       opportunity: req.params.opportunityId,
     })
-      .populate("volunteer", "name email skills")
+      .populate("volunteer", "name email")
+      .populate("opportunity", "title status applyDeadline")
       .sort({ createdAt: -1 });
 
     res.json(applications);
@@ -84,14 +111,39 @@ exports.getApplicants = async (req, res) => {
   }
 };
 
-
-/* ================= ACCEPT / REJECT ================= */
-exports.updateStatus = async (req, res) => {
+// ================= NGO ALL APPLICATIONS =================
+exports.getNgoApplications = async (req, res) => {
   try {
     if (req.user.role !== "ngo") {
-      return res.status(403).json({ message: "Access denied" });
+      return res.status(403).json({ message: "Only NGOs can view applicants" });
     }
 
+    const ngoOpportunities = await Opportunity.find({ ngo: req.user._id }).select(
+      "_id"
+    );
+
+    const opportunityIds = ngoOpportunities.map((opp) => opp._id);
+
+    if (opportunityIds.length === 0) {
+      return res.json([]);
+    }
+
+    const applications = await Application.find({
+      opportunity: { $in: opportunityIds },
+    })
+      .populate("volunteer", "name email")
+      .populate("opportunity", "title status applyDeadline")
+      .sort({ createdAt: -1 });
+
+    res.json(applications);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// ================= ACCEPT / REJECT =================
+exports.updateStatus = async (req, res) => {
+  try {
     const { status } = req.body;
 
     if (!["accepted", "rejected"].includes(status)) {
@@ -100,6 +152,7 @@ exports.updateStatus = async (req, res) => {
       });
     }
 
+    // 🔥 populate opportunity INCLUDING ngo field
     const application = await Application.findById(req.params.id)
       .populate({
         path: "opportunity",
@@ -109,10 +162,13 @@ exports.updateStatus = async (req, res) => {
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
-
+    if (req.user.role !== "ngo") {
+      return res.status(403).json({ message: "Only NGOs can update status" });
+    }
+    // 🔥 Safe comparison
     if (
-      application.opportunity.ngo.toString() !==
-      req.user._id.toString()
+      !application.opportunity ||
+      application.opportunity.ngo.toString() !== req.user._id.toString()
     ) {
       return res.status(403).json({ message: "Not authorized" });
     }
@@ -125,14 +181,12 @@ exports.updateStatus = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-/* ================= UNDO APPLICATION ================= */
+// ================= UNDO APPLICATION =================
 exports.undoApplication = async (req, res) => {
   try {
     const { opportunityId } = req.params;
 
-    const application = await Application.findOneAndDelete({
+    const application = await Application.findOne({
       opportunity: opportunityId,
       volunteer: req.user._id,
     });
@@ -143,35 +197,17 @@ exports.undoApplication = async (req, res) => {
       });
     }
 
+    if (application.status === "accepted") {
+      return res.status(400).json({
+        message: "Cannot withdraw after being accepted",
+      });
+    }
+
+    await application.deleteOne();
+
     res.status(200).json({
       message: "Application withdrawn successfully",
     });
-
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-/* ================= NGO VIEW ALL APPLICANTS ================= */
-/* ================= NGO VIEW ALL APPLICANTS ================= */
-exports.getAllApplicantsForNGO = async (req, res) => {
-  try {
-    if (req.user.role !== "ngo") {
-      return res.status(403).json({ message: "Access denied" });
-    }
-
-    const applications = await Application.find()
-      .populate({
-        path: "opportunity",
-        select: "title ngo",
-        match: { ngo: req.user._id } // only this NGO's opportunities
-      })
-      .populate("volunteer", "name email skills")
-      .sort({ createdAt: -1 });
-
-    // Remove applications where opportunity didn't match NGO
-    const filtered = applications.filter(app => app.opportunity);
-
-    res.json(filtered);
 
   } catch (error) {
     res.status(500).json({ message: error.message });

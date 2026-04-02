@@ -1,4 +1,4 @@
-import Navbar from "../../layouts/Navbar";
+﻿import Navbar from "../../layouts/Navbar";
 import Sidebar from "../../layouts/Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -14,18 +14,18 @@ const SkillBridgeLogo = ({ size = 24, className }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={className}
   >
-    <circle cx="20" cy="20" r="18" fill="#2563eb" fillOpacity="0.2" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+    <circle cx="20" cy="20" r="18" fill="#111111" fillOpacity="0.2" stroke="#111111" strokeWidth="2" strokeDasharray="4 4" />
     <path
       d="M12 20L18 26L28 14"
-      stroke="#2563eb"
+      stroke="#111111"
       strokeWidth="3"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <circle cx="20" cy="20" r="6" stroke="#2563eb" strokeWidth="2" fill="none" />
+    <circle cx="20" cy="20" r="6" stroke="#111111" strokeWidth="2" fill="none" />
     <path
       d="M20 8V12M20 28V32M32 20H28M12 20H8M28.5 11.5L25.5 14.5M14.5 25.5L11.5 28.5M28.5 28.5L25.5 25.5M14.5 14.5L11.5 11.5"
-      stroke="#2563eb"
+      stroke="#111111"
       strokeWidth="2"
       strokeLinecap="round"
     />
@@ -82,7 +82,7 @@ const VolunteerDashboard = () => {
         width: '300px',
         height: '300px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         top: '-100px',
         right: '-100px',
         animation: 'float 25s infinite ease-in-out',
@@ -93,7 +93,7 @@ const VolunteerDashboard = () => {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         bottom: '-150px',
         left: '-150px',
         animation: 'float 30s infinite ease-in-out reverse',
@@ -143,13 +143,13 @@ const VolunteerDashboard = () => {
         <div className="main-content" style={{ 
   flex: 1,
   padding: '28px',
-  marginLeft: '260px',   // <-- ADD THIS LINE
+  marginLeft: 'var(--sidebar-width)',   // <-- ADD THIS LINE
   overflowY: 'auto',
   animation: 'slideUp 0.6s ease-out'
 }}>
           {/* Welcome Banner - Enhanced */}
           <div style={{
-            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+            background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
             backgroundSize: '200% 200%',
             animation: 'gradientShift 10s ease infinite',
             borderRadius: '24px',
@@ -158,7 +158,7 @@ const VolunteerDashboard = () => {
             color: 'white',
             position: 'relative',
             overflow: 'hidden',
-            boxShadow: '0 20px 40px -15px rgba(37, 99, 235, 0.4)'
+            boxShadow: '0 20px 40px -15px rgba(0,0,0,0.22)'
           }}>
             {/* Shimmer overlay */}
             <div style={{
@@ -216,7 +216,7 @@ const VolunteerDashboard = () => {
                   margin: '0 0 6px',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.1)'
                 }}>
-                  Welcome back, {user.name || "Volunteer"}! 👋
+                  Welcome back, {user.name || "Volunteer"}!
                 </h2>
                 <p style={{ 
                   fontSize: '15px', 
@@ -264,8 +264,8 @@ const VolunteerDashboard = () => {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 20px 30px -12px rgba(37, 99, 235, 0.3)';
-              e.currentTarget.style.borderColor = '#2563eb';
+              e.currentTarget.style.boxShadow = '0 20px 30px -12px rgba(0,0,0,0.18)';
+              e.currentTarget.style.borderColor = '#111111';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
@@ -276,13 +276,17 @@ const VolunteerDashboard = () => {
                 width: '56px',
                 height: '56px',
                 borderRadius: '16px',
-                background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px'
+                color: '#111111'
               }}>
-                📄
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
+                  <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z" />
+                  <path d="M14 3v5h5" />
+                  <path d="M9 13h6M9 17h4" strokeLinecap="round" />
+                </svg>
               </div>
               <div>
                 <p style={{ fontSize: '14px', color: '#6b7280', margin: '0 0 4px', fontWeight: '500' }}>Applications</p>
@@ -291,7 +295,7 @@ const VolunteerDashboard = () => {
                   fontWeight: '800', 
                   color: '#1f2937', 
                   margin: 0,
-                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
                 }}>
@@ -317,8 +321,8 @@ const VolunteerDashboard = () => {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 20px 30px -12px rgba(37, 99, 235, 0.3)';
-              e.currentTarget.style.borderColor = '#2563eb';
+              e.currentTarget.style.boxShadow = '0 20px 30px -12px rgba(0,0,0,0.18)';
+              e.currentTarget.style.borderColor = '#111111';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
@@ -333,9 +337,11 @@ const VolunteerDashboard = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px'
+                color: '#059669'
               }}>
-                ✅
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M20 7L10 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </div>
               <div>
                 <p style={{ fontSize: '14px', color: '#6b7280', margin: '0 0 4px', fontWeight: '500' }}>Accepted</p>
@@ -370,8 +376,8 @@ const VolunteerDashboard = () => {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 20px 30px -12px rgba(37, 99, 235, 0.3)';
-              e.currentTarget.style.borderColor = '#2563eb';
+              e.currentTarget.style.boxShadow = '0 20px 30px -12px rgba(0,0,0,0.18)';
+              e.currentTarget.style.borderColor = '#111111';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
@@ -386,9 +392,12 @@ const VolunteerDashboard = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px'
+                color: '#d97706'
               }}>
-                ⏳
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </div>
               <div>
                 <p style={{ fontSize: '14px', color: '#6b7280', margin: '0 0 4px', fontWeight: '500' }}>Pending</p>
@@ -429,7 +438,7 @@ const VolunteerDashboard = () => {
                 fontWeight: '700', 
                 color: '#1f2937', 
                 margin: 0,
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
               }}>
@@ -439,10 +448,10 @@ const VolunteerDashboard = () => {
                 onClick={() => navigate("/volunteer-profile")}
                 style={{
                   padding: '8px 16px',
-                  background: '#eff6ff',
+                  background: '#f2f2f2',
                   border: 'none',
                   borderRadius: '30px',
-                  color: '#2563eb',
+                  color: '#111111',
                   fontSize: '13px',
                   fontWeight: '600',
                   cursor: 'pointer',
@@ -452,11 +461,11 @@ const VolunteerDashboard = () => {
                   gap: '4px'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = '#dbeafe';
+                  e.target.style.background = '#e6e6e6';
                   e.target.style.transform = 'scale(1.02)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.background = '#eff6ff';
+                  e.target.style.background = '#f2f2f2';
                   e.target.style.transform = 'scale(1)';
                 }}
               >
@@ -480,14 +489,14 @@ const VolunteerDashboard = () => {
                 width: '80px',
                 height: '80px',
                 borderRadius: '24px',
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: 'white',
                 fontSize: '32px',
                 fontWeight: '700',
-                boxShadow: '0 10px 20px -8px rgba(37, 99, 235, 0.4)'
+                boxShadow: '0 10px 20px -8px rgba(0,0,0,0.22)'
               }}>
                 {user.name?.charAt(0) || 'V'}
               </div>
@@ -531,7 +540,7 @@ const VolunteerDashboard = () => {
                 alignItems: 'center',
                 gap: '6px'
               }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#111111">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
                 Your Skills
@@ -541,23 +550,23 @@ const VolunteerDashboard = () => {
                   {user.skills.map((skill, index) => (
                     <span key={index} style={{
                       padding: '8px 18px',
-                      background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                      background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                       borderRadius: '30px',
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#2563eb',
-                      border: '1px solid #bfdbfe',
-                      boxShadow: '0 2px 6px rgba(37, 99, 235, 0.1)',
+                      color: '#111111',
+                      border: '1px solid #d1d1d1',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
                       transition: 'all 0.2s ease',
                       cursor: 'default'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.transform = 'scale(1.02)';
-                      e.target.style.boxShadow = '0 4px 10px rgba(37, 99, 235, 0.2)';
+                      e.target.style.boxShadow = '0 4px 10px rgba(0,0,0,0.12)';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.transform = 'scale(1)';
-                      e.target.style.boxShadow = '0 2px 6px rgba(37, 99, 235, 0.1)';
+                      e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.08)';
                     }}>
                       {skill}
                     </span>
@@ -586,7 +595,7 @@ const VolunteerDashboard = () => {
                 alignItems: 'center',
                 gap: '6px'
               }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#111111">
                   <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 2h6v2h-6V6zm0 4h6v2h-6v-2zm-6 0h4v2H6v-2zm10 4h-4v-2h4v2zm-10 0h4v2H6v-2zm10 4h-4v-2h4v2zm-10 0h4v2H6v-2z"/>
                 </svg>
                 Recent Activity
@@ -623,7 +632,7 @@ const VolunteerDashboard = () => {
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.background = '#f3f4f6';
-                        e.currentTarget.style.borderColor = '#2563eb';
+                        e.currentTarget.style.borderColor = '#111111';
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.background = '#f9fafb';
@@ -693,7 +702,7 @@ const VolunteerDashboard = () => {
                   fontWeight: '700', 
                   color: '#1f2937', 
                   margin: '0 0 4px',
-                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
                 }}>
@@ -707,7 +716,7 @@ const VolunteerDashboard = () => {
                 onClick={() => navigate("/opportunities")}
                 style={{
                   padding: '10px 20px',
-                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                   border: 'none',
                   borderRadius: '30px',
                   color: 'white',
@@ -718,15 +727,15 @@ const VolunteerDashboard = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)'
+                  boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)'
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.transform = 'scale(1.02)';
-                  e.target.style.boxShadow = '0 12px 20px -8px rgba(37, 99, 235, 0.5)';
+                  e.target.style.boxShadow = '0 12px 20px -8px rgba(0,0,0,0.28)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.transform = 'scale(1)';
-                  e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                  e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                 }}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
@@ -757,7 +766,11 @@ const VolunteerDashboard = () => {
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '20px' }}>
-                {opps.slice(0, 3).map((o, index) => (
+                {opps.slice(0, 3).map((o, index) => {
+                  const statusLabel = String(o.status || "open");
+                  const isOpen = statusLabel.toLowerCase() === "open";
+
+                  return (
                   <div key={o._id} style={{
                     border: '1px solid #e5e7eb',
                     borderRadius: '20px',
@@ -767,8 +780,8 @@ const VolunteerDashboard = () => {
                     animation: `slideUp 0.5s ease-out ${0.5 + index * 0.1}s both`
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#2563eb';
-                    e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(37, 99, 235, 0.2)';
+                    e.currentTarget.style.borderColor = '#111111';
+                    e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.12)';
                     e.currentTarget.style.transform = 'translateY(-3px)';
                   }}
                   onMouseLeave={(e) => {
@@ -792,14 +805,16 @@ const VolunteerDashboard = () => {
                       </h4>
                       <span style={{
                         padding: '6px 14px',
-                        background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)',
+                        background: isOpen
+                          ? 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)'
+                          : 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
                         borderRadius: '30px',
                         fontSize: '12px',
                         fontWeight: '700',
-                        color: '#065f46',
-                        border: '1px solid #6ee7b7'
+                        color: isOpen ? '#065f46' : '#991b1b',
+                        border: isOpen ? '1px solid #6ee7b7' : '1px solid #fca5a5'
                       }}>
-                        Open
+                        {statusLabel}
                       </span>
                     </div>
                     
@@ -848,9 +863,9 @@ const VolunteerDashboard = () => {
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.background = '#2563eb';
+                          e.target.style.background = '#111111';
                           e.target.style.color = 'white';
-                          e.target.style.borderColor = '#2563eb';
+                          e.target.style.borderColor = '#111111';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.background = '#f3f4f6';
@@ -926,8 +941,8 @@ const VolunteerDashboard = () => {
                           gap: '6px'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.background = '#2563eb';
-                          e.target.style.borderColor = '#2563eb';
+                          e.target.style.background = '#111111';
+                          e.target.style.borderColor = '#111111';
                           e.target.style.color = 'white';
                         }}
                         onMouseLeave={(e) => {
@@ -943,7 +958,8 @@ const VolunteerDashboard = () => {
                       </button>
                     </div>
                   </div>
-                ))}
+                );
+                })}
 
                 {opps.length > 3 && (
                   <div style={{ textAlign: 'center', marginTop: '12px' }}>
@@ -965,8 +981,8 @@ const VolunteerDashboard = () => {
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = '#f3f4f6';
-                        e.target.style.borderColor = '#2563eb';
-                        e.target.style.color = '#2563eb';
+                        e.target.style.borderColor = '#111111';
+                        e.target.style.color = '#111111';
                       }}
                       onMouseLeave={(e) => {
                         e.target.style.background = 'transparent';
@@ -991,3 +1007,5 @@ const VolunteerDashboard = () => {
 };
 
 export default VolunteerDashboard;
+
+

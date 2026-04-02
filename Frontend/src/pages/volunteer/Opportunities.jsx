@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import Navbar from "../../layouts/Navbar";
 import Sidebar from "../../layouts/Sidebar";
 import api from "../../utils/api";
@@ -14,18 +14,18 @@ const SkillBridgeLogo = ({ size = 24, className }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={className}
   >
-    <circle cx="20" cy="20" r="18" fill="#2563eb" fillOpacity="0.2" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+    <circle cx="20" cy="20" r="18" fill="#111111" fillOpacity="0.2" stroke="#111111" strokeWidth="2" strokeDasharray="4 4" />
     <path
       d="M12 20L18 26L28 14"
-      stroke="#2563eb"
+      stroke="#111111"
       strokeWidth="3"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <circle cx="20" cy="20" r="6" stroke="#2563eb" strokeWidth="2" fill="none" />
+    <circle cx="20" cy="20" r="6" stroke="#111111" strokeWidth="2" fill="none" />
     <path
       d="M20 8V12M20 28V32M32 20H28M12 20H8M28.5 11.5L25.5 14.5M14.5 25.5L11.5 28.5M28.5 28.5L25.5 25.5M14.5 14.5L11.5 11.5"
-      stroke="#2563eb"
+      stroke="#111111"
       strokeWidth="2"
       strokeLinecap="round"
     />
@@ -41,11 +41,17 @@ export default function Opportunities() {
 
   const navigate = useNavigate();
 
-  const fetchOpportunities = async () => {
+  const fetchOpportunities = async (overrides = {}) => {
     try {
       setLoading(true);
+      const query = {
+        skill,
+        location,
+        duration,
+        ...overrides
+      };
       const res = await api.get("/opportunity", {
-        params: { skill, location, duration }
+        params: query
       });
       setOpps(res.data);
     } catch (err) {
@@ -56,14 +62,28 @@ export default function Opportunities() {
   };
 
   useEffect(() => {
-    fetchOpportunities();
+    const loadInitialOpportunities = async () => {
+      try {
+        setLoading(true);
+        const res = await api.get("/opportunity", {
+          params: { skill: "", location: "", duration: "" }
+        });
+        setOpps(res.data);
+      } catch (err) {
+        console.log("Error fetching opportunities:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInitialOpportunities();
   }, []);
 
   const clearFilters = () => {
     setSkill("");
     setLocation("");
     setDuration("");
-    fetchOpportunities();
+    fetchOpportunities({ skill: "", location: "", duration: "" });
   };
 
   return (
@@ -80,7 +100,7 @@ export default function Opportunities() {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         top: '-150px',
         right: '-150px',
         animation: 'float 25s infinite ease-in-out',
@@ -91,7 +111,7 @@ export default function Opportunities() {
         width: '500px',
         height: '500px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         bottom: '-200px',
         left: '-200px',
         animation: 'float 30s infinite ease-in-out reverse',
@@ -145,7 +165,7 @@ export default function Opportunities() {
        <div className="main-content" style={{
   flex: 1,
   padding: '28px',
-  marginLeft: '260px',   // ⭐ ADD THIS LINE
+  marginLeft: 'var(--sidebar-width)',
   overflowY: 'auto',
   animation: 'slideUp 0.6s ease-out'
 }}>
@@ -166,7 +186,7 @@ export default function Opportunities() {
               right: 0,
               width: '300px',
               height: '300px',
-              background: 'radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%)',
               borderRadius: '50%',
               transform: 'translate(100px, -150px)',
               zIndex: 0
@@ -174,7 +194,7 @@ export default function Opportunities() {
 
             {/* Header with gradient and logo */}
             <div style={{
-              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+              background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
               backgroundSize: '200% 200%',
               animation: 'gradientShift 10s ease infinite',
               margin: '-28px -28px 28px -28px',
@@ -310,8 +330,8 @@ export default function Opportunities() {
                     outline: 'none'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#2563eb';
-                    e.target.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)';
+                    e.target.style.borderColor = '#111111';
+                    e.target.style.boxShadow = '0 0 0 3px rgba(0,0,0,0.08)';
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = '#e5e7eb';
@@ -349,8 +369,8 @@ export default function Opportunities() {
                     outline: 'none'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#2563eb';
-                    e.target.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)';
+                    e.target.style.borderColor = '#111111';
+                    e.target.style.boxShadow = '0 0 0 3px rgba(0,0,0,0.08)';
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = '#e5e7eb';
@@ -387,8 +407,8 @@ export default function Opportunities() {
                     outline: 'none'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#2563eb';
-                    e.target.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)';
+                    e.target.style.borderColor = '#111111';
+                    e.target.style.boxShadow = '0 0 0 3px rgba(0,0,0,0.08)';
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = '#e5e7eb';
@@ -403,7 +423,7 @@ export default function Opportunities() {
                   disabled={loading}
                   style={{
                     padding: '12px 28px',
-                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                    background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                     color: 'white',
                     border: 'none',
                     borderRadius: '30px',
@@ -411,7 +431,7 @@ export default function Opportunities() {
                     fontWeight: '600',
                     cursor: loading ? 'not-allowed' : 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)',
+                    boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)',
                     opacity: loading ? 0.7 : 1,
                     display: 'flex',
                     alignItems: 'center',
@@ -420,13 +440,13 @@ export default function Opportunities() {
                   onMouseEnter={(e) => {
                     if(!loading) {
                       e.target.style.transform = 'scale(1.02)';
-                      e.target.style.boxShadow = '0 12px 20px -8px rgba(37, 99, 235, 0.5)';
+                      e.target.style.boxShadow = '0 12px 20px -8px rgba(0,0,0,0.28)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if(!loading) {
                       e.target.style.transform = 'scale(1)';
-                      e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                      e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                     }
                   }}
                 >
@@ -503,7 +523,7 @@ export default function Opportunities() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="#6b7280">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
                 </svg>
-                Found <strong style={{ color: '#2563eb' }}>{opps.length}</strong> opportunities
+                Found <strong style={{ color: '#111111' }}>{opps.length}</strong> opportunities
               </p>
             </div>
 
@@ -531,7 +551,7 @@ export default function Opportunities() {
                     style={{
                       marginTop: '20px',
                       padding: '10px 24px',
-                      background: '#2563eb',
+                      background: '#111111',
                       color: 'white',
                       border: 'none',
                       borderRadius: '30px',
@@ -541,11 +561,11 @@ export default function Opportunities() {
                       transition: 'all 0.2s ease'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.background = '#1d4ed8';
+                      e.target.style.background = '#2b2b2b';
                       e.target.style.transform = 'scale(1.02)';
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.background = '#2563eb';
+                      e.target.style.background = '#111111';
                       e.target.style.transform = 'scale(1)';
                     }}
                   >
@@ -555,7 +575,11 @@ export default function Opportunities() {
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                {opps.map((o, index) => (
+                {opps.map((o, index) => {
+                  const statusLabel = String(o.status || "open");
+                  const isOpen = statusLabel.toLowerCase() === "open";
+
+                  return (
                   <div key={o._id} style={{
                     border: '1px solid #e5e7eb',
                     borderRadius: '20px',
@@ -567,8 +591,8 @@ export default function Opportunities() {
                     overflow: 'hidden'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#2563eb';
-                    e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(37, 99, 235, 0.2)';
+                    e.currentTarget.style.borderColor = '#111111';
+                    e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.12)';
                     e.currentTarget.style.transform = 'translateY(-3px)';
                   }}
                   onMouseLeave={(e) => {
@@ -583,7 +607,7 @@ export default function Opportunities() {
                       right: 0,
                       width: '100px',
                       height: '100px',
-                      background: 'linear-gradient(135deg, rgba(37,99,235,0.03) 0%, transparent 70%)',
+                      background: 'linear-gradient(135deg, rgba(0,0,0,0.02) 0%, transparent 70%)',
                       borderRadius: '50%',
                       transform: 'translate(40px, -40px)'
                     }} />
@@ -599,7 +623,7 @@ export default function Opportunities() {
                         fontWeight: '700', 
                         color: '#1f2937', 
                         margin: 0,
-                        background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                        background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent'
                       }}>
@@ -607,15 +631,19 @@ export default function Opportunities() {
                       </h4>
                       <span style={{
                         padding: '6px 16px',
-                        background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)',
+                        background: isOpen
+                          ? 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)'
+                          : 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
                         borderRadius: '30px',
                         fontSize: '12px',
                         fontWeight: '700',
-                        color: '#065f46',
-                        border: '1px solid #6ee7b7',
-                        boxShadow: '0 2px 6px rgba(16, 185, 129, 0.2)'
+                        color: isOpen ? '#065f46' : '#991b1b',
+                        border: isOpen ? '1px solid #6ee7b7' : '1px solid #fca5a5',
+                        boxShadow: isOpen
+                          ? '0 2px 6px rgba(16, 185, 129, 0.2)'
+                          : '0 2px 6px rgba(239, 68, 68, 0.15)'
                       }}>
-                        {o.status || 'Open'}
+                        {statusLabel}
                       </span>
                     </div>
                     
@@ -665,22 +693,22 @@ export default function Opportunities() {
                         {o.skillsRequired.slice(0, 5).map((skill, idx) => (
                           <span key={idx} style={{
                             padding: '6px 16px',
-                            background: '#eff6ff',
+                            background: '#f2f2f2',
                             borderRadius: '30px',
                             fontSize: '12px',
                             fontWeight: '500',
-                            color: '#2563eb',
-                            border: '1px solid #bfdbfe',
+                            color: '#111111',
+                            border: '1px solid #d1d1d1',
                             transition: 'all 0.2s ease'
                           }}
                           onMouseEnter={(e) => {
-                            e.target.style.background = '#2563eb';
+                            e.target.style.background = '#111111';
                             e.target.style.color = 'white';
                             e.target.style.transform = 'scale(1.02)';
                           }}
                           onMouseLeave={(e) => {
-                            e.target.style.background = '#eff6ff';
-                            e.target.style.color = '#2563eb';
+                            e.target.style.background = '#f2f2f2';
+                            e.target.style.color = '#111111';
                             e.target.style.transform = 'scale(1)';
                           }}>
                             {skill}
@@ -744,7 +772,7 @@ export default function Opportunities() {
                       style={{
                         width: '100%',
                         padding: '14px',
-                        background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                        background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                         border: 'none',
                         borderRadius: '30px',
                         color: 'white',
@@ -752,7 +780,7 @@ export default function Opportunities() {
                         fontWeight: '600',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease',
-                        boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)',
+                        boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -760,11 +788,11 @@ export default function Opportunities() {
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.transform = 'scale(1.02)';
-                        e.target.style.boxShadow = '0 12px 20px -8px rgba(37, 99, 235, 0.5)';
+                        e.target.style.boxShadow = '0 12px 20px -8px rgba(0,0,0,0.28)';
                       }}
                       onMouseLeave={(e) => {
                         e.target.style.transform = 'scale(1)';
-                        e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                        e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                       }}
                     >
                       <span>View Full Details</span>
@@ -773,7 +801,8 @@ export default function Opportunities() {
                       </svg>
                     </button>
                   </div>
-                ))}
+                );
+                })}
               </div>
             )}
           </div>
@@ -782,3 +811,6 @@ export default function Opportunities() {
     </div>
   );
 }
+
+
+

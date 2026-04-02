@@ -1,29 +1,34 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
-
+const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-
-const applicationRoutes = require("./routes/applicationRoutes");
-const ngoRoutes = require("./routes/ngoRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const opportunityRoutes = require("./routes/opportunityRoutes");
-const volunteerRoutes = require("./routes/volunteerRoutes");
-const userRoutes = require("./routes/userRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
+dotenv.config();
+connectDB();
 
 const app = express();
 
-/* Middleware */
 app.use(cors());
 app.use(express.json());
 
-/* Connect DB */
-connectDB();
+app.use("/api/ngo", require("./routes/ngoRoutes"));
+app.use("/api/volunteer", require("./routes/volunteerRoutes"));
 
-/* Routes */
-app.use("/api/application", applicationRoutes);
-app.use("/api/ngo", ngoRoutes);
+app.use("/api/user", require("./routes/userRoutes"));
+
 app.use("/api/opportunity", opportunityRoutes);
-app.use("/api/volunteer", volunteerRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/opportunities", opportunityRoutes);
+app.use("/api/application", applicationRoutes);
+app.use("/api/applications", applicationRoutes);
 
-app.listen(5000, () => console.log("Server running on 5000"));
+app.use("/api/chat", messageRoutes);
+app.use("/api/messages", messageRoutes);
+
+app.listen(process.env.PORT, () =>
+  console.log(`Server running on port ${process.env.PORT}`)
+);
+app.get("/test", (req, res) => {
+  res.send("Backend working");
+});

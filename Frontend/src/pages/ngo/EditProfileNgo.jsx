@@ -1,4 +1,4 @@
-import Navbar from "../../layouts/Navbar";
+﻿import Navbar from "../../layouts/Navbar";
 import NGOSidebar from "../../layouts/NGOSidebar";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
@@ -118,7 +118,7 @@ export default function EditProfileNgo() {
         <NGOSidebar />
         
         <div style={{ 
-          marginLeft: '260px',
+          marginLeft: 'var(--sidebar-width)',
           paddingTop: '70px',
           minHeight: '100vh',
           display: 'flex',
@@ -138,17 +138,17 @@ export default function EditProfileNgo() {
               width: '80px',
               height: '80px',
               borderRadius: '24px',
-              background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+              background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               margin: '0 auto 20px',
-              color: '#2563eb'
+              color: '#111111'
             }}>
               <div style={{
                 width: '40px',
                 height: '40px',
-                border: '3px solid #2563eb',
+                border: '3px solid #111111',
                 borderTopColor: 'transparent',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite'
@@ -179,7 +179,7 @@ export default function EditProfileNgo() {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         top: '-150px',
         right: '-150px',
         animation: 'float 25s infinite ease-in-out',
@@ -190,7 +190,7 @@ export default function EditProfileNgo() {
         width: '500px',
         height: '500px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         bottom: '-200px',
         left: '-200px',
         animation: 'float 30s infinite ease-in-out reverse',
@@ -242,7 +242,7 @@ export default function EditProfileNgo() {
       
       {/* Main Content - with left margin for fixed sidebar */}
       <div style={{ 
-        marginLeft: '260px', // Same as sidebar width
+        marginLeft: 'var(--sidebar-width)', // Same as sidebar width
         paddingTop: '70px', // Height of navbar
         minHeight: '100vh',
         position: 'relative',
@@ -271,7 +271,7 @@ export default function EditProfileNgo() {
             right: 0,
             width: '300px',
             height: '300px',
-            background: 'radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%)',
             borderRadius: '50%',
             transform: 'translate(100px, -150px)',
             zIndex: 0
@@ -279,7 +279,7 @@ export default function EditProfileNgo() {
 
           {/* Header with gradient and logo */}
           <div style={{
-            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+            background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
             backgroundSize: '200% 200%',
             animation: 'gradientShift 10s ease infinite',
             padding: '36px 32px',
@@ -433,14 +433,14 @@ export default function EditProfileNgo() {
                 width: '80px',
                 height: '80px',
                 borderRadius: '24px',
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: 'white',
                 fontSize: '32px',
                 fontWeight: '700',
-                boxShadow: '0 10px 20px -8px rgba(37, 99, 235, 0.4)'
+                boxShadow: '0 10px 20px -8px rgba(0,0,0,0.22)'
               }}>
                 {form.name?.charAt(0) || 'N'}
               </div>
@@ -450,7 +450,7 @@ export default function EditProfileNgo() {
                   fontWeight: '700', 
                   color: '#1f2937', 
                   margin: '0 0 6px',
-                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
                 }}>
@@ -498,7 +498,7 @@ export default function EditProfileNgo() {
                   transform: 'translateY(-50%)',
                   width: '18px',
                   height: '18px',
-                  color: isEditing ? '#2563eb' : '#9ca3af',
+                  color: isEditing ? '#111111' : '#9ca3af',
                   transition: 'color 0.2s ease',
                   zIndex: 1
                 }} />
@@ -520,10 +520,10 @@ export default function EditProfileNgo() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -624,7 +624,7 @@ export default function EditProfileNgo() {
                   transform: 'translateY(-50%)',
                   width: '18px',
                   height: '18px',
-                  color: isEditing ? '#2563eb' : '#9ca3af',
+                  color: isEditing ? '#111111' : '#9ca3af',
                   transition: 'color 0.2s ease',
                   zIndex: 1
                 }} />
@@ -646,10 +646,10 @@ export default function EditProfileNgo() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -695,7 +695,7 @@ export default function EditProfileNgo() {
                   top: '16px',
                   width: '18px',
                   height: '18px',
-                  color: isEditing ? '#2563eb' : '#9ca3af',
+                  color: isEditing ? '#111111' : '#9ca3af',
                   transition: 'color 0.2s ease',
                   zIndex: 1
                 }} />
@@ -721,10 +721,10 @@ export default function EditProfileNgo() {
                       lineHeight: '1.6'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -773,7 +773,7 @@ export default function EditProfileNgo() {
                   transform: 'translateY(-50%)',
                   width: '18px',
                   height: '18px',
-                  color: isEditing ? '#2563eb' : '#9ca3af',
+                  color: isEditing ? '#111111' : '#9ca3af',
                   transition: 'color 0.2s ease',
                   zIndex: 1
                 }} />
@@ -795,10 +795,10 @@ export default function EditProfileNgo() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -815,11 +815,11 @@ export default function EditProfileNgo() {
                     borderRadius: '30px',
                     fontSize: '14px',
                     backgroundColor: '#f9fafb',
-                    color: '#2563eb',
+                    color: '#111111',
                     fontWeight: '500'
                   }}>
                     {form.website ? (
-                      <a href={form.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }}>
+                      <a href={form.website} target="_blank" rel="noopener noreferrer" style={{ color: '#111111', textDecoration: 'none' }}>
                         {form.website}
                       </a>
                     ) : "Not provided"}
@@ -835,7 +835,7 @@ export default function EditProfileNgo() {
                 style={{
                   width: '100%',
                   padding: '16px',
-                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                   border: 'none',
                   borderRadius: '30px',
                   color: 'white',
@@ -847,15 +847,15 @@ export default function EditProfileNgo() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '10px',
-                  boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)'
+                  boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)'
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.transform = 'scale(1.02)';
-                  e.target.style.boxShadow = '0 12px 24px -8px rgba(37, 99, 235, 0.5)';
+                  e.target.style.boxShadow = '0 12px 24px -8px rgba(0,0,0,0.28)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.transform = 'scale(1)';
-                  e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                  e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                 }}
               >
                 <Edit2 size="20" />
@@ -979,3 +979,4 @@ export default function EditProfileNgo() {
     </div>
   );
 }
+

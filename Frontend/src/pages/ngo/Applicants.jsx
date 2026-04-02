@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+﻿import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "../../utils/api";
+import { addNotification } from "../../utils/notificationUtils";
 import Navbar from "../../layouts/Navbar";
 import NGOSidebar from "../../layouts/NGOSidebar";
 import { Users, CheckCircle, XCircle, Mail, Briefcase, MessageSquare, Calendar } from "lucide-react";
@@ -33,8 +34,7 @@ const SkillBridgeLogo = ({ size = 24 }) => (
 );
 
 export default function Applicants() {
-  const navigate = useNavigate();
-  const { id } = useParams();   // ✅ get opportunity id
+  const { id } = useParams();
 
   const [apps, setApps] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -73,6 +73,12 @@ export default function Applicants() {
       setApps(apps.map(a =>
         a._id === appId ? { ...a, status } : a
       ));
+      const volunteerName = apps.find(a => a._id === appId)?.volunteer?.name || "Volunteer";
+      if (status === "accepted") {
+        addNotification(`Accepted ${volunteerName}'s application`, "application");
+      } else {
+        addNotification(`Rejected ${volunteerName}'s application`, "application");
+      }
 
     } catch (err) {
       console.log("Error updating application:", err);
@@ -105,7 +111,7 @@ export default function Applicants() {
         <NGOSidebar />
         
         <div style={{ 
-          marginLeft: '260px',
+          marginLeft: 'var(--sidebar-width)',
           paddingTop: '70px',
           minHeight: '100vh',
           display: 'flex',
@@ -125,17 +131,17 @@ export default function Applicants() {
               width: '80px',
               height: '80px',
               borderRadius: '24px',
-              background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+              background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               margin: '0 auto 20px',
-              color: '#2563eb'
+              color: '#111111'
             }}>
               <div style={{
                 width: '40px',
                 height: '40px',
-                border: '3px solid #2563eb',
+                border: '3px solid #111111',
                 borderTopColor: 'transparent',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite'
@@ -166,7 +172,7 @@ export default function Applicants() {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         top: '-150px',
         right: '-150px',
         animation: 'float 25s infinite ease-in-out',
@@ -177,7 +183,7 @@ export default function Applicants() {
         width: '500px',
         height: '500px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         bottom: '-200px',
         left: '-200px',
         animation: 'float 30s infinite ease-in-out reverse',
@@ -229,7 +235,7 @@ export default function Applicants() {
       
       {/* Main Content - with left margin for fixed sidebar */}
       <div style={{ 
-        marginLeft: '260px', // Same as sidebar width
+        marginLeft: 'var(--sidebar-width)', // Same as sidebar width
         paddingTop: '70px', // Height of navbar
         minHeight: '100vh',
         position: 'relative',
@@ -241,7 +247,7 @@ export default function Applicants() {
         }}>
           {/* Header with gradient and logo */}
           <div style={{
-            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+            background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
             backgroundSize: '200% 200%',
             animation: 'gradientShift 10s ease infinite',
             borderRadius: '24px',
@@ -250,7 +256,7 @@ export default function Applicants() {
             color: 'white',
             position: 'relative',
             overflow: 'hidden',
-            boxShadow: '0 20px 40px -15px rgba(37, 99, 235, 0.4)'
+            boxShadow: '0 20px 40px -15px rgba(0,0,0,0.22)'
           }}>
             {/* Shimmer overlay */}
             <div style={{
@@ -349,8 +355,8 @@ export default function Applicants() {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(37, 99, 235, 0.2)';
-              e.currentTarget.style.borderColor = '#2563eb';
+              e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(0,0,0,0.12)';
+              e.currentTarget.style.borderColor = '#111111';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
@@ -363,7 +369,7 @@ export default function Applicants() {
                 fontWeight: '800', 
                 color: '#1f2937', 
                 margin: 0,
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
               }}>
@@ -489,12 +495,12 @@ export default function Applicants() {
                   width: '100px',
                   height: '100px',
                   borderRadius: '30px',
-                  background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                  background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 24px',
-                  color: '#2563eb'
+                  color: '#111111'
                 }}>
                   <Users size="50" />
                 </div>
@@ -522,8 +528,8 @@ export default function Applicants() {
                       overflow: 'hidden'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#2563eb';
-                      e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(37, 99, 235, 0.2)';
+                      e.currentTarget.style.borderColor = '#111111';
+                      e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.12)';
                       e.currentTarget.style.transform = 'translateY(-3px)';
                     }}
                     onMouseLeave={(e) => {
@@ -538,7 +544,7 @@ export default function Applicants() {
                         right: 0,
                         width: '150px',
                         height: '150px',
-                        background: 'radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%)',
                         borderRadius: '50%',
                         transform: 'translate(50px, -50px)',
                         zIndex: 0
@@ -557,14 +563,14 @@ export default function Applicants() {
                             width: '56px',
                             height: '56px',
                             borderRadius: '16px',
-                            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                            background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             color: 'white',
                             fontSize: '24px',
                             fontWeight: '700',
-                            boxShadow: '0 8px 16px -8px rgba(37, 99, 235, 0.4)'
+                            boxShadow: '0 8px 16px -8px rgba(0,0,0,0.22)'
                           }}>
                             {a.volunteer?.name?.charAt(0) || 'V'}
                           </div>
@@ -574,7 +580,7 @@ export default function Applicants() {
                               fontWeight: '700', 
                               color: '#1f2937', 
                               margin: '0 0 6px',
-                              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                              background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                               WebkitBackgroundClip: 'text',
                               WebkitTextFillColor: 'transparent'
                             }}>
@@ -628,7 +634,7 @@ export default function Applicants() {
                         zIndex: 1
                       }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                          <Briefcase size="18" color="#2563eb" />
+                          <Briefcase size="18" color="#111111" />
                           <span style={{ fontSize: '15px', fontWeight: '600', color: '#1f2937' }}>
                             {a.opportunity?.title}
                           </span>
@@ -757,3 +763,5 @@ export default function Applicants() {
     </div>
   );
 }
+
+

@@ -2,31 +2,50 @@ const mongoose = require("mongoose");
 
 const opportunitySchema = new mongoose.Schema(
   {
-    title: String,
-    description: String,
-
-    location: String,
-    category: String,
-
-    skillsRequired: [String],
-
-    volunteersNeeded: Number,
-
-    applyDeadline: Date,
-
-    duration: String, // ✅ added for filtering
-
-    status: {
+    title: {
       type: String,
-      default: "open" // ✅ lowercase fixed
+      required: true,
+      trim: true,
+      lowercase: true, // prevents case duplicates
     },
-
+    description: {
+      type: String,
+      required: true,
+    },
+    skills: [String],
+    skillsRequired: [String],
+    category: String,
+    volunteersNeeded: Number,
+    positions: Number,
+    duration: String,
+    location: String,
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
+    applyDeadline: {
+      type: Date,
+      required: true,
+    },
     ngo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: "User",
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["Open", "Closed"],
+      default: "Open",
+    },
   },
   { timestamps: true }
 );
+
+// ✅ Unique per NGO (compound index)
+opportunitySchema.index({ title: 1, ngo: 1 }, { unique: true });
 
 module.exports = mongoose.model("Opportunity", opportunitySchema);

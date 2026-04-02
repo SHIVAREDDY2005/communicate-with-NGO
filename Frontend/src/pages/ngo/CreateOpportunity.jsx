@@ -1,7 +1,8 @@
-import Navbar from "../../layouts/Navbar";
+﻿import Navbar from "../../layouts/Navbar";
 import NGOSidebar from "../../layouts/NGOSidebar";
 import { useState } from "react";
 import api from "../../utils/api";
+import { addNotification } from "../../utils/notificationUtils";
 import { useNavigate } from "react-router-dom";
 import { Briefcase, FileText, MapPin, Tag, Users, Calendar, PlusCircle } from "lucide-react";
 
@@ -60,6 +61,7 @@ export default function CreateOpportunity() {
           .filter(s => s !== "")
       });
 
+      addNotification(`Opportunity "${form.title || "New opportunity"}" created successfully!`, "opportunity");
       alert("Opportunity created successfully!");
       navigate("/my-opportunities");
     } catch (err) {
@@ -82,7 +84,7 @@ export default function CreateOpportunity() {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         top: '-150px',
         right: '-150px',
         animation: 'float 25s infinite ease-in-out',
@@ -93,7 +95,7 @@ export default function CreateOpportunity() {
         width: '500px',
         height: '500px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         bottom: '-200px',
         left: '-200px',
         animation: 'float 30s infinite ease-in-out reverse',
@@ -140,7 +142,7 @@ export default function CreateOpportunity() {
       
       {/* Main Content - with left margin for fixed sidebar */}
       <div style={{ 
-        marginLeft: '260px', // Same as sidebar width
+        marginLeft: 'var(--sidebar-width)', // Same as sidebar width
         paddingTop: '70px', // Height of navbar
         minHeight: '100vh',
         position: 'relative',
@@ -172,7 +174,7 @@ export default function CreateOpportunity() {
               right: 0,
               width: '300px',
               height: '300px',
-              background: 'radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%)',
               borderRadius: '50%',
               transform: 'translate(100px, -150px)',
               zIndex: 0
@@ -180,7 +182,7 @@ export default function CreateOpportunity() {
 
             {/* Header with gradient and logo */}
             <div style={{
-              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+              background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
               backgroundSize: '200% 200%',
               animation: 'gradientShift 10s ease infinite',
               margin: '-32px -32px 28px -32px',
@@ -320,10 +322,10 @@ export default function CreateOpportunity() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -380,10 +382,10 @@ export default function CreateOpportunity() {
                       lineHeight: '1.6'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -436,10 +438,10 @@ export default function CreateOpportunity() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -492,10 +494,10 @@ export default function CreateOpportunity() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -548,10 +550,10 @@ export default function CreateOpportunity() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -619,10 +621,10 @@ export default function CreateOpportunity() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -675,10 +677,10 @@ export default function CreateOpportunity() {
                       backgroundColor: '#fafafa'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#2563eb';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+                      e.target.style.borderColor = '#111111';
+                      e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.08)';
                       e.target.style.backgroundColor = 'white';
-                      e.target.previousSibling.style.color = '#2563eb';
+                      e.target.previousSibling.style.color = '#111111';
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = '#e5e7eb';
@@ -702,7 +704,7 @@ export default function CreateOpportunity() {
                   style={{
                     flex: 2,
                     padding: '16px',
-                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                    background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                     border: 'none',
                     borderRadius: '30px',
                     color: 'white',
@@ -715,18 +717,18 @@ export default function CreateOpportunity() {
                     gap: '10px',
                     transition: 'all 0.2s ease',
                     opacity: loading ? 0.7 : 1,
-                    boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)'
+                    boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)'
                   }}
                   onMouseEnter={(e) => {
                     if(!loading) {
                       e.target.style.transform = 'scale(1.02)';
-                      e.target.style.boxShadow = '0 12px 24px -8px rgba(37, 99, 235, 0.5)';
+                      e.target.style.boxShadow = '0 12px 24px -8px rgba(0,0,0,0.28)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if(!loading) {
                       e.target.style.transform = 'scale(1)';
-                      e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                      e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                     }
                   }}
                 >
@@ -819,3 +821,4 @@ export default function CreateOpportunity() {
     </div>
   );
 }
+

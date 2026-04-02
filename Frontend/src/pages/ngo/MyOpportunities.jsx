@@ -1,4 +1,4 @@
-import Navbar from "../../layouts/Navbar";
+﻿import Navbar from "../../layouts/Navbar";
 import NGOSidebar from "../../layouts/NGOSidebar";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
@@ -72,7 +72,7 @@ export default function MyOpportunities() {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         top: '-150px',
         right: '-150px',
         animation: 'float 25s infinite ease-in-out',
@@ -83,7 +83,7 @@ export default function MyOpportunities() {
         width: '500px',
         height: '500px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         bottom: '-200px',
         left: '-200px',
         animation: 'float 30s infinite ease-in-out reverse',
@@ -130,7 +130,7 @@ export default function MyOpportunities() {
       
       {/* Main Content - with left margin for fixed sidebar */}
       <div style={{ 
-        marginLeft: '260px', // Same as sidebar width
+        marginLeft: 'var(--sidebar-width)', // Same as sidebar width
         paddingTop: '70px', // Height of navbar
         minHeight: '100vh',
         position: 'relative',
@@ -142,7 +142,7 @@ export default function MyOpportunities() {
         }}>
           {/* Header with gradient and logo */}
           <div style={{
-            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+            background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
             backgroundSize: '200% 200%',
             animation: 'gradientShift 10s ease infinite',
             borderRadius: '24px',
@@ -151,7 +151,7 @@ export default function MyOpportunities() {
             color: 'white',
             position: 'relative',
             overflow: 'hidden',
-            boxShadow: '0 20px 40px -15px rgba(37, 99, 235, 0.4)'
+            boxShadow: '0 20px 40px -15px rgba(0,0,0,0.22)'
           }}>
             {/* Shimmer overlay */}
             <div style={{
@@ -250,8 +250,8 @@ export default function MyOpportunities() {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(37, 99, 235, 0.2)';
-              e.currentTarget.style.borderColor = '#2563eb';
+              e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(0,0,0,0.12)';
+              e.currentTarget.style.borderColor = '#111111';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
@@ -264,7 +264,7 @@ export default function MyOpportunities() {
                 fontWeight: '800', 
                 color: '#1f2937', 
                 margin: 0,
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
               }}>
@@ -343,7 +343,7 @@ export default function MyOpportunities() {
               onClick={() => navigate("/create-opportunity")}
               style={{
                 padding: '14px 28px',
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                 border: 'none',
                 borderRadius: '30px',
                 color: 'white',
@@ -354,15 +354,15 @@ export default function MyOpportunities() {
                 alignItems: 'center',
                 gap: '10px',
                 transition: 'all 0.2s ease',
-                boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)'
+                boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)'
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = 'scale(1.02)';
-                e.target.style.boxShadow = '0 12px 24px -8px rgba(37, 99, 235, 0.5)';
+                e.target.style.boxShadow = '0 12px 24px -8px rgba(0,0,0,0.28)';
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
               }}
             >
               <PlusCircle size="20" />
@@ -385,17 +385,17 @@ export default function MyOpportunities() {
                   width: '60px',
                   height: '60px',
                   borderRadius: '16px',
-                  background: '#eff6ff',
+                  background: '#f2f2f2',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 16px',
-                  color: '#2563eb'
+                  color: '#111111'
                 }}>
                   <div style={{
                     width: '30px',
                     height: '30px',
-                    border: '3px solid #2563eb',
+                    border: '3px solid #111111',
                     borderTopColor: 'transparent',
                     borderRadius: '50%',
                     animation: 'spin 1s linear infinite'
@@ -415,12 +415,12 @@ export default function MyOpportunities() {
                   width: '100px',
                   height: '100px',
                   borderRadius: '30px',
-                  background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                  background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 24px',
-                  color: '#2563eb'
+                  color: '#111111'
                 }}>
                   <Briefcase size="50" />
                 </div>
@@ -434,7 +434,7 @@ export default function MyOpportunities() {
                   onClick={() => navigate("/create-opportunity")}
                   style={{
                     padding: '14px 32px',
-                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                    background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                     border: 'none',
                     borderRadius: '30px',
                     color: 'white',
@@ -464,8 +464,8 @@ export default function MyOpportunities() {
                     overflow: 'hidden'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#2563eb';
-                    e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(37, 99, 235, 0.2)';
+                    e.currentTarget.style.borderColor = '#111111';
+                    e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.12)';
                     e.currentTarget.style.transform = 'translateY(-3px)';
                   }}
                   onMouseLeave={(e) => {
@@ -480,7 +480,7 @@ export default function MyOpportunities() {
                       right: 0,
                       width: '150px',
                       height: '150px',
-                      background: 'radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%)',
+                      background: 'radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%)',
                       borderRadius: '50%',
                       transform: 'translate(50px, -50px)',
                       zIndex: 0
@@ -499,7 +499,7 @@ export default function MyOpportunities() {
                         fontWeight: '700', 
                         color: '#1f2937', 
                         margin: 0,
-                        background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                        background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent'
                       }}>
@@ -566,12 +566,12 @@ export default function MyOpportunities() {
                           width: '32px',
                           height: '32px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                          background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <MapPin size="16" color="#2563eb" />
+                          <MapPin size="16" color="#111111" />
                         </div>
                         <div>
                           <p style={{ fontSize: '11px', color: '#6b7280', margin: '0 0 2px', fontWeight: '500' }}>Location</p>
@@ -586,12 +586,12 @@ export default function MyOpportunities() {
                           width: '32px',
                           height: '32px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                          background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <Tag size="16" color="#2563eb" />
+                          <Tag size="16" color="#111111" />
                         </div>
                         <div>
                           <p style={{ fontSize: '11px', color: '#6b7280', margin: '0 0 2px', fontWeight: '500' }}>Category</p>
@@ -606,12 +606,12 @@ export default function MyOpportunities() {
                           width: '32px',
                           height: '32px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                          background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <Users size="16" color="#2563eb" />
+                          <Users size="16" color="#111111" />
                         </div>
                         <div>
                           <p style={{ fontSize: '11px', color: '#6b7280', margin: '0 0 2px', fontWeight: '500' }}>Volunteers Needed</p>
@@ -626,12 +626,12 @@ export default function MyOpportunities() {
                           width: '32px',
                           height: '32px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                          background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <Calendar size="16" color="#2563eb" />
+                          <Calendar size="16" color="#111111" />
                         </div>
                         <div>
                           <p style={{ fontSize: '11px', color: '#6b7280', margin: '0 0 2px', fontWeight: '500' }}>Deadline</p>
@@ -656,17 +656,17 @@ export default function MyOpportunities() {
                           {o.skillsRequired.map((skill, index) => (
                             <span key={index} style={{
                               padding: '6px 16px',
-                              background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                              background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                               borderRadius: '30px',
                               fontSize: '12px',
                               fontWeight: '600',
-                              color: '#2563eb',
-                              border: '1px solid #bfdbfe',
+                              color: '#111111',
+                              border: '1px solid #d1d1d1',
                               transition: 'all 0.2s ease'
                             }}
                             onMouseEnter={(e) => {
                               e.target.style.transform = 'scale(1.02)';
-                              e.target.style.boxShadow = '0 4px 10px -4px rgba(37, 99, 235, 0.3)';
+                              e.target.style.boxShadow = '0 4px 10px -4px rgba(0,0,0,0.18)';
                             }}
                             onMouseLeave={(e) => {
                               e.target.style.transform = 'scale(1)';
@@ -694,7 +694,7 @@ export default function MyOpportunities() {
                         onClick={() => navigate(`/edit-opportunity/${o._id}`)}
                         style={{
                           padding: '12px',
-                          background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                          background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                           border: 'none',
                           borderRadius: '30px',
                           color: 'white',
@@ -706,15 +706,15 @@ export default function MyOpportunities() {
                           justifyContent: 'center',
                           gap: '8px',
                           transition: 'all 0.2s ease',
-                          boxShadow: '0 4px 10px -4px rgba(37, 99, 235, 0.3)'
+                          boxShadow: '0 4px 10px -4px rgba(0,0,0,0.18)'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.transform = 'scale(1.02)';
-                          e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                          e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.transform = 'scale(1)';
-                          e.target.style.boxShadow = '0 4px 10px -4px rgba(37, 99, 235, 0.3)';
+                          e.target.style.boxShadow = '0 4px 10px -4px rgba(0,0,0,0.18)';
                         }}
                       >
                         <Edit size="16" />
@@ -793,3 +793,4 @@ export default function MyOpportunities() {
     </div>
   );
 }
+

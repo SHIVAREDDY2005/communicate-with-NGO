@@ -1,7 +1,8 @@
-import Navbar from "../../layouts/Navbar";
+﻿import Navbar from "../../layouts/Navbar";
 import Sidebar from "../../layouts/Sidebar";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
+import { addNotification } from "../../utils/notificationUtils";
 
 // Add SkillBridge logo component
 const SkillBridgeLogo = ({ size = 24, className }) => (
@@ -13,18 +14,18 @@ const SkillBridgeLogo = ({ size = 24, className }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={className}
   >
-    <circle cx="20" cy="20" r="18" fill="#2563eb" fillOpacity="0.2" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+    <circle cx="20" cy="20" r="18" fill="#111111" fillOpacity="0.2" stroke="#111111" strokeWidth="2" strokeDasharray="4 4" />
     <path
       d="M12 20L18 26L28 14"
-      stroke="#2563eb"
+      stroke="#111111"
       strokeWidth="3"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <circle cx="20" cy="20" r="6" stroke="#2563eb" strokeWidth="2" fill="none" />
+    <circle cx="20" cy="20" r="6" stroke="#111111" strokeWidth="2" fill="none" />
     <path
       d="M20 8V12M20 28V32M32 20H28M12 20H8M28.5 11.5L25.5 14.5M14.5 25.5L11.5 28.5M28.5 28.5L25.5 25.5M14.5 14.5L11.5 11.5"
-      stroke="#2563eb"
+      stroke="#111111"
       strokeWidth="2"
       strokeLinecap="round"
     />
@@ -50,6 +51,7 @@ export default function MyApplications() {
     try {
       await api.delete(`/application/undo/${id}`);
       setApps(apps.filter(a => a.opportunity._id !== id));
+      addNotification("Application withdrawn successfully", "application");
     } catch (err) {
       console.log("Withdraw error:", err);
     }
@@ -83,7 +85,7 @@ export default function MyApplications() {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         top: '-150px',
         right: '-150px',
         animation: 'float 25s infinite ease-in-out',
@@ -94,7 +96,7 @@ export default function MyApplications() {
         width: '500px',
         height: '500px',
         borderRadius: '50%',
-        background: 'rgba(37, 99, 235, 0.03)',
+        background: 'rgba(0,0,0,0.02)',
         bottom: '-200px',
         left: '-200px',
         animation: 'float 30s infinite ease-in-out reverse',
@@ -144,7 +146,7 @@ export default function MyApplications() {
        <div className="main-content" style={{ 
   flex: 1,
   padding: '28px',
-  marginLeft: '260px',   // ⭐ ADD THIS LINE
+  marginLeft: 'var(--sidebar-width)',
   overflowY: 'auto',
   animation: 'slideUp 0.6s ease-out'
 }}>
@@ -165,7 +167,7 @@ export default function MyApplications() {
               right: 0,
               width: '300px',
               height: '300px',
-              background: 'radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%)',
               borderRadius: '50%',
               transform: 'translate(100px, -150px)',
               zIndex: 0
@@ -173,7 +175,7 @@ export default function MyApplications() {
 
             {/* Header with gradient and logo */}
             <div style={{
-              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%)',
+              background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 50%, #111111 100%)',
               backgroundSize: '200% 200%',
               animation: 'gradientShift 10s ease infinite',
               margin: '-28px -28px 24px -28px',
@@ -283,8 +285,8 @@ export default function MyApplications() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-3px)';
-                e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(37, 99, 235, 0.2)';
-                e.currentTarget.style.borderColor = '#2563eb';
+                e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.12)';
+                e.currentTarget.style.borderColor = '#111111';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
@@ -297,7 +299,7 @@ export default function MyApplications() {
                   fontWeight: '800', 
                   color: '#1f2937', 
                   margin: 0,
-                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
                 }}>
@@ -386,12 +388,12 @@ export default function MyApplications() {
                   width: '100px',
                   height: '100px',
                   borderRadius: '30px',
-                  background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                  background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 24px',
-                  color: '#2563eb',
+                  color: '#111111',
                   animation: 'pulse 3s infinite ease-in-out'
                 }}>
                   <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -401,14 +403,14 @@ export default function MyApplications() {
                 <h4 style={{ fontSize: '22px', fontWeight: '700', color: '#1f2937', margin: '0 0 8px' }}>
                   No applications yet
                 </h4>
-                <p style={{ fontSize: '15px', color: '#6b7280', margin: '0 0 24px', maxWidth: '400px', margin: '0 auto' }}>
+                <p style={{ fontSize: '15px', color: '#6b7280', margin: '0 auto', maxWidth: '400px' }}>
                   Start exploring opportunities and apply to your first volunteer position!
                 </p>
                 <button
                   onClick={() => window.location.href = '/opportunities'}
                   style={{
                     padding: '14px 32px',
-                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                    background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                     border: 'none',
                     borderRadius: '30px',
                     color: 'white',
@@ -416,18 +418,18 @@ export default function MyApplications() {
                     fontWeight: '600',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 8px 16px -6px rgba(37, 99, 235, 0.4)',
+                    boxShadow: '0 8px 16px -6px rgba(0,0,0,0.22)',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '8px'
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.transform = 'scale(1.02)';
-                    e.target.style.boxShadow = '0 12px 20px -8px rgba(37, 99, 235, 0.5)';
+                    e.target.style.boxShadow = '0 12px 20px -8px rgba(0,0,0,0.28)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.transform = 'scale(1)';
-                    e.target.style.boxShadow = '0 8px 16px -6px rgba(37, 99, 235, 0.4)';
+                    e.target.style.boxShadow = '0 8px 16px -6px rgba(0,0,0,0.22)';
                   }}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
@@ -454,8 +456,8 @@ export default function MyApplications() {
                       overflow: 'hidden'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#2563eb';
-                      e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(37, 99, 235, 0.2)';
+                      e.currentTarget.style.borderColor = '#111111';
+                      e.currentTarget.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.12)';
                       e.currentTarget.style.transform = 'translateY(-3px)';
                     }}
                     onMouseLeave={(e) => {
@@ -470,7 +472,7 @@ export default function MyApplications() {
                         right: 0,
                         width: '150px',
                         height: '150px',
-                        background: 'radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%)',
                         borderRadius: '50%',
                         transform: 'translate(50px, -50px)',
                         zIndex: 0
@@ -490,7 +492,7 @@ export default function MyApplications() {
                           fontWeight: '700', 
                           color: '#1f2937', 
                           margin: 0,
-                          background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                          background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent'
                         }}>
@@ -538,14 +540,14 @@ export default function MyApplications() {
                           width: '48px',
                           height: '48px',
                           borderRadius: '14px',
-                          background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                          background: 'linear-gradient(135deg, #111111 0%, #2b2b2b 100%)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           color: 'white',
                           fontSize: '20px',
                           fontWeight: '700',
-                          boxShadow: '0 8px 16px -8px rgba(37, 99, 235, 0.4)'
+                          boxShadow: '0 8px 16px -8px rgba(0,0,0,0.22)'
                         }}>
                           {a.opportunity.ngo?.name?.charAt(0) || 'N'}
                         </div>
@@ -574,7 +576,7 @@ export default function MyApplications() {
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = '#2563eb';
+                          e.currentTarget.style.borderColor = '#111111';
                           e.currentTarget.style.background = '#f3f4f6';
                         }}
                         onMouseLeave={(e) => {
@@ -582,7 +584,7 @@ export default function MyApplications() {
                           e.currentTarget.style.background = '#f9fafb';
                         }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#111111">
                               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                             </svg>
                             <p style={{ fontSize: '12px', color: '#6b7280', margin: 0, fontWeight: '500' }}>Location</p>
@@ -600,7 +602,7 @@ export default function MyApplications() {
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = '#2563eb';
+                          e.currentTarget.style.borderColor = '#111111';
                           e.currentTarget.style.background = '#f3f4f6';
                         }}
                         onMouseLeave={(e) => {
@@ -608,7 +610,7 @@ export default function MyApplications() {
                           e.currentTarget.style.background = '#f9fafb';
                         }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#111111">
                               <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 4h4v3h-4V4z"/>
                             </svg>
                             <p style={{ fontSize: '12px', color: '#6b7280', margin: 0, fontWeight: '500' }}>Opportunity Status</p>
@@ -623,7 +625,7 @@ export default function MyApplications() {
                       {a.opportunity.skillsRequired && a.opportunity.skillsRequired.length > 0 && (
                         <div style={{ marginBottom: '20px', position: 'relative', zIndex: 1 }}>
                           <p style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', margin: '0 0 10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#2563eb">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#111111">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                             </svg>
                             Required Skills
@@ -632,12 +634,12 @@ export default function MyApplications() {
                             {a.opportunity.skillsRequired.slice(0, 4).map((skill, index) => (
                               <span key={index} style={{
                                 padding: '6px 14px',
-                                background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                                background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                                 borderRadius: '30px',
                                 fontSize: '12px',
                                 fontWeight: '600',
-                                color: '#2563eb',
-                                border: '1px solid #bfdbfe',
+                                color: '#111111',
+                                border: '1px solid #d1d1d1',
                                 transition: 'all 0.2s ease',
                                 display: 'inline-flex',
                                 alignItems: 'center',
@@ -645,13 +647,13 @@ export default function MyApplications() {
                               }}
                               onMouseEnter={(e) => {
                                 e.target.style.transform = 'scale(1.02)';
-                                e.target.style.boxShadow = '0 4px 10px -4px rgba(37, 99, 235, 0.3)';
+                                e.target.style.boxShadow = '0 4px 10px -4px rgba(0,0,0,0.18)';
                               }}
                               onMouseLeave={(e) => {
                                 e.target.style.transform = 'scale(1)';
                                 e.target.style.boxShadow = 'none';
                               }}>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#2563eb">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#111111">
                                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                                 </svg>
                                 {skill}
@@ -691,21 +693,26 @@ export default function MyApplications() {
                           width: '32px',
                           height: '32px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+                          background: 'linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="#111111">
                             <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm.5-13H11v6l5.2 3.1.8-1.2-4.5-2.7V7z"/>
                           </svg>
                         </div>
                         <p style={{ fontSize: '13px', color: '#4b5563', margin: 0 }}>
-                          Applied on <strong>{new Date(a.appliedAt || Date.now()).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}</strong>
+                          Applied on{" "}
+                          <strong>
+                            {a.appliedAt
+                              ? new Date(a.appliedAt).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })
+                              : "Unknown date"}
+                          </strong>
                         </p>
                       </div>
 
@@ -816,8 +823,8 @@ export default function MyApplications() {
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.background = '#f3f4f6';
-                            e.target.style.borderColor = '#2563eb';
-                            e.target.style.color = '#2563eb';
+                            e.target.style.borderColor = '#111111';
+                            e.target.style.color = '#111111';
                             e.target.style.transform = 'scale(1.02)';
                           }}
                           onMouseLeave={(e) => {
@@ -845,3 +852,5 @@ export default function MyApplications() {
     </div>
   );
 }
+
+

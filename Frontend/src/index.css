@@ -1,3 +1,359 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --aw-bg: #ebebeb;
+  --aw-surface: #f7f7f7;
+  --aw-surface-2: #ffffff;
+  --aw-text: #151515;
+  --aw-text-soft: #6d6d6d;
+  --aw-line: #d7d7d7;
+  --aw-line-strong: #111111;
+  --aw-radius-lg: 22px;
+  --aw-radius-md: 14px;
+  --aw-sidebar-width: 260px;
+  --sidebar-width: 260px;
+  --topbar-height: 74px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Instrument Sans", "Segoe UI", sans-serif;
+  color: var(--aw-text);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0, 0, 0, 0.035) 0, rgba(0, 0, 0, 0.035) 1px, transparent 1px) 0 0 / 4px 4px,
+    linear-gradient(180deg, #efefef 0%, #e5e5e5 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Space Grotesk", "Instrument Sans", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.aw-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  height: var(--topbar-height);
+  border-bottom: 1px solid var(--aw-line);
+  background: rgba(244, 244, 244, 0.93);
+  backdrop-filter: blur(9px);
+  display: grid;
+  grid-template-columns: auto minmax(320px, 620px) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 0 22px;
+}
+
+.aw-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.aw-brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.aw-brand-label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #131313;
+}
+
+.aw-navbar-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 18px;
+}
+
+.aw-navbar-link {
+  border: none;
+  background: transparent;
+  color: #252525;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: default;
+  padding: 0;
+}
+
+.aw-search {
+  height: 44px;
+  border: 1px solid var(--aw-line);
+  border-radius: 14px;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+}
+
+.aw-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #202020;
+  font-size: 14px;
+}
+
+.aw-search input::placeholder {
+  color: #7a7a7a;
+}
+
+.aw-navbar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aw-chip {
+  border: 1px solid var(--aw-line);
+  border-radius: 999px;
+  background: #f6f6f6;
+  color: #2a2a2a;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  line-height: 1;
+}
+
+.aw-icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  border: 1px solid var(--aw-line);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.aw-icon-btn:hover {
+  border-color: #bbb;
+}
+
+.aw-badge-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: #111;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aw-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  border: 1px solid var(--aw-line);
+  background: #fff;
+  color: #111;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aw-logout {
+  border: 1px solid var(--aw-line-strong);
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  cursor: pointer;
+}
+
+.aw-sidebar {
+  width: var(--aw-sidebar-width);
+  background: rgba(250, 250, 250, 0.95);
+  border-right: 1px solid var(--aw-line);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(6px);
+}
+
+.aw-sidebar-top {
+  height: var(--topbar-height);
+  border-bottom: 1px solid var(--aw-line);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+}
+
+.aw-sidebar-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.aw-sidebar-title-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid #1d1d1d;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.aw-sidebar-nav {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aw-nav-btn {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: #3e3e3e;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  padding: 11px 12px;
+  cursor: pointer;
+}
+
+.aw-nav-btn:hover {
+  border-color: #cfcfcf;
+  background: #f2f2f2;
+  color: #111;
+}
+
+.aw-nav-btn.active {
+  border-color: #161616;
+  background: #141414;
+  color: #f7f7f7;
+}
+
+.aw-sidebar-bottom {
+  border-top: 1px solid var(--aw-line);
+  padding: 14px;
+}
+
+.aw-user-card {
+  border: 1px solid var(--aw-line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aw-user-meta {
+  min-width: 0;
+}
+
+.aw-user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aw-user-role {
+  font-size: 11px;
+  color: #767676;
+}
+
+.aw-shell-main {
+  margin-left: var(--sidebar-width);
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+
+  .aw-sidebar {
+    display: none;
+  }
+
+  .aw-navbar {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 14px;
+  }
+
+  .aw-navbar-links {
+    display: none;
+  }
+
+  .aw-chip {
+    display: none;
+  }
+}
