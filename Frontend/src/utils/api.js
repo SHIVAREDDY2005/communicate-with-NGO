@@ -1,6 +1,10 @@
 import axios from "axios";
 
-const defaultApiBaseUrl = "http://localhost:5000/api";
+const productionApiBaseUrl =
+  "https://shivareddy-03-communicate-with-ngo-backend.hf.space/api";
+const defaultApiBaseUrl = import.meta.env.PROD
+  ? productionApiBaseUrl
+  : "http://localhost:5000/api";
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || defaultApiBaseUrl).replace(/\/$/, "");
 
 const api = axios.create({

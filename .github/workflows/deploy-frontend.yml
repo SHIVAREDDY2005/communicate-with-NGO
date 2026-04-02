@@ -42,8 +42,8 @@ jobs:
       - name: Build frontend
         run: npm run build
         env:
-          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
-          VITE_SOCKET_URL: ${{ vars.VITE_SOCKET_URL }}
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://shivareddy-03-communicate-with-ngo-backend.hf.space/api' }}
+          VITE_SOCKET_URL: ${{ vars.VITE_SOCKET_URL || 'https://shivareddy-03-communicate-with-ngo-backend.hf.space' }}
 
       - name: Add SPA fallback
         run: cp dist/index.html dist/404.html

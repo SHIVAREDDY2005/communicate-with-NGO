@@ -1,6 +1,11 @@
 import io from "socket.io-client";
 
-const socketUrl = (import.meta.env.VITE_SOCKET_URL || "http://localhost:5000").replace(/\/$/, "");
+const productionSocketUrl =
+  "https://shivareddy-03-communicate-with-ngo-backend.hf.space";
+const defaultSocketUrl = import.meta.env.PROD
+  ? productionSocketUrl
+  : "http://localhost:5000";
+const socketUrl = (import.meta.env.VITE_SOCKET_URL || defaultSocketUrl).replace(/\/$/, "");
 
 let socket = null;
 let currentUserId = null;
