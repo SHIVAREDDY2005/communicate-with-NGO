@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const defaultApiBaseUrl = "http://localhost:5000/api";
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || defaultApiBaseUrl).replace(/\/$/, "");
+
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: apiBaseUrl,
   headers: {
     "Content-Type": "application/json"
   }
@@ -42,7 +45,8 @@ api.interceptors.response.use(
 
       localStorage.removeItem("token");
 
-      window.location.href = "/login";
+      const loginPath = `${import.meta.env.BASE_URL}login`;
+      window.location.assign(loginPath);
     }
 
     return Promise.reject(error);
